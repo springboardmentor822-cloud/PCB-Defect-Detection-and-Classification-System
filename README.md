@@ -93,28 +93,6 @@ G1 --> H[Primary Model Saved]
 G2 --> I[Optional Model Saved]
 
 
-'''
-                User Upload
-                     │
-                     ▼
-              Streamlit Frontend
-                     │
-                     ▼
-             Backend Inference Engine
-                     │
-       ┌─────────────┼─────────────┐
-       │                           │
-  Preprocessing              Classification
-       │                           │
-Image Subtraction           EfficientNet (Primary)
-Contour Detection           Custom CNN (Optional)
-ROI Extraction                    │
-       │                           │
-       └─────────────► Result Generation ◄─────────────┘
-                             │
-                     Annotated Output
-
-'''
 ---
 
 ## 4. Defect Categories
@@ -179,7 +157,7 @@ An alternative architecture implemented for comparison and experimentation. It i
 Clone the repository
 
 ```
-git clone https://github.com/<username>/pcb-defect-inspection-system.git
+[git clone https://github.com/<username>/pcb-defect-inspection-system.git](https://github.com/springboardmentor822-cloud/PCB-Defect-Detection-and-Classification-System.git)
 cd pcb-defect-inspection-system
 ```
 
@@ -328,4 +306,5 @@ MIT License
 
 Sivaraj V
 GitHub: [https://github.com/sivarajv04](https://github.com/sivarajv04)
+
 
