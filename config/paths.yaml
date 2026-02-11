@@ -1,0 +1,23 @@
+# ===============================
+# PATH CONFIGURATION FILE
+# ===============================
+# Edit these paths after cloning
+# No code changes required
+# ===============================
+
+BASE_DIR: .
+
+DATASET_DIR: PCB_DATASET/PCB_DATASET
+
+TEMPLATE_DIR: PCB_DATASET/PCB_DATASET/PCB_USED
+
+IMAGE_DIR: PCB_DATASET/PCB_DATASET/images
+
+STORED_MASK_DIR: data/processed/diff_masks
+
+MODEL_PATHS:
+  efficientnet: models/efficientnet_b0_pcb_v2.pth
+  custom: models/custom_cnn_pcb.pth
+
+OUTPUT_DIR: outputs
+TEMP_UPLOAD_DIR: temp_uploads
