@@ -1,245 +1,260 @@
-Automated PCB Defect Inspection System
+# Automated PCB Defect Inspection System
 
-Hybrid Computer Vision + Deep Learning AOI Application
+Hybrid Computer Vision and Deep Learning Based AOI Application
 
+---
 
+## 1. Introduction
 
-|| Overview
+Printed Circuit Board (PCB) inspection is a critical step in electronics manufacturing. Even a minor defect such as a short circuit, missing hole, or open trace can cause complete device failure. Traditional manual inspection is slow, inconsistent, and prone to human error, while conventional Automated Optical Inspection (AOI) systems rely heavily on static templates and lack adaptability.
 
-Printed Circuit Board (PCB) inspection in manufacturing requires extremely high accuracy because even a microscopic defect can cause total circuit failure. Manual inspection is slow and error-prone, while traditional Automated Optical Inspection (AOI) systems depend heavily on static templates and fail when boards vary or references are unavailable.
+This project implements a complete intelligent inspection software that automates the inspection workflow using a combination of classical image processing and deep learning classification. The system processes PCB images, extracts defect regions, classifies the defects, and produces an annotated inspection report.
 
-This project implements a complete intelligent inspection software that automates the full inspection workflow — from raw PCB images to defect reporting — using classical image processing and deep learning classification.
+The goal of this project is to simulate an industrial inspection pipeline rather than only training a machine learning model.
 
-The project is designed as an industrial-style inspection application, not just a machine learning experiment.
+---
 
+## 2. Objectives
 
+* Automate PCB defect inspection
+* Reduce dependency on manual inspection
+* Generate training datasets automatically using annotation files
+* Implement a modular AOI pipeline
+* Provide an interactive inspection interface
+* Support extensibility for industrial deployment
 
-|| Objectives
+---
 
-Automate defect detection and classification
+## 3. System Methodology
 
-Eliminate manual inspection dependency
+The system operates in two major phases:
 
-Build a real AOI pipeline rather than isolated ML model
+### Phase A: Dataset Generation Using Annotations
 
-Automatically generate training dataset from annotations
+Annotation files are used to automatically construct a training dataset.
 
-Provide a user-friendly inspection interface
+Raw PCB Image + Template + XML Annotation
+→ Image Subtraction
+→ Contour Detection
+→ Region of Interest Extraction
+→ Structured Training Dataset
 
+### Phase B: Defect Classification
 
+The trained model learns defect categories from cropped defect images.
 
+ROI Images → Deep Learning Classifier → Defect Label
 
-|| Special Contributions (What I Implemented)
+---
 
+## 4. Defect Categories
 
-1️⃣ Automatic Dataset Generation Engine
+The system classifies the following PCB defects:
 
-Created a pipeline that converts annotations into training data automatically:
+* Missing Hole
+* Mouse Bite
+* Open Circuit
+* Short
+* Spur
+* Spurious Copper
 
-Template + PCB image + XML annotation
-        ↓
-Difference detection
-        ↓
-Contour detection
-        ↓
-ROI extraction
-        ↓
-Structured classification dataset
+---
 
-2️⃣ Hybrid Vision Pipeline
+## 5. System Architecture
 
-Implemented multi-stage inspection combining:
+User Upload
+→ Image Processing Engine
+→ Difference Detection
+→ Contour Extraction
+→ ROI Generation
+→ Deep Learning Classification
+→ Annotated Output
 
-Classical image subtraction for localization
+---
 
-Contour extraction for defect regions
+## 6. Project Structure
 
-Deep learning classifier for understanding
-
-3️⃣ Config-Driven Modular Architecture
-
-Central configuration system:
-
-config/paths.yaml
-
-
-Allows project to run without editing code paths.
-
-4️⃣ Multi-Model Training Framework
-
-Implemented two classifiers trained on the same dataset:
-
-Model	Role
-EfficientNet	Primary production model
-Custom CNN	Optional experimental model
-
-The application uses EfficientNet by default.
-Custom CNN is included only for comparison and experimentation.
-
-5️⃣ Complete Inference Application
-
-Built full inspection software:
-
-Upload Image → Processing → Prediction → Annotated Output
-
-6️⃣ Industrial Workflow Simulation
-
-Replicates manufacturing inspection stages:
-
-Pre-processing → Region detection → Classification → Reporting
-
-
-
-
-|| Defect Classes
-
-Missing Hole
-
-Mouse Bite
-
-Open Circuit
-
-Short
-
-Spur
-
-Spurious Copper
-
-     System Architecture
-
-
-                User Upload
-                    │
-                    ▼
-           Image Processing Engine
-                    │
-        ┌───────────┼───────────┐
-        │                       │
-   Subtraction            Contour Detection
-        │                              │
-        └──────────► ROI Extraction ◄──
-                           │
-                   EfficientNet Classifier
-                       (Custom CNN Optional)
-                           │
-                   Defect Classification
-                           │
-                   Annotated Output
-
-📁 Project Structure
+```
 project/
 │
-├── frontend/               # Streamlit UI
-├── src/                    # Backend inference pipeline
-├── config/                 # Path configuration system
-├── trainings/              # Dataset generation + training
-├── models/                 # Trained models
+├── frontend/              User interface (Streamlit application)
+├── src/                   Backend inference pipeline
+├── config/                Configuration and path management
+├── trainings/             Dataset generation and model training scripts
+├── models/                Stored trained models
 │
-├── data/raw/               # Original dataset
-├── data/processed/         # Generated masks & contours
-├── processed_dataset/      # Final ML dataset
+├── data/raw/              Original images, templates and annotations
+├── data/processed/        Generated masks and contours
+├── processed_dataset/     Final training dataset
 │
 └── README.md
+```
 
-|| Installation
+---
 
-git clone 
+## 7. Models Used
+
+### EfficientNet (Primary Model)
+
+This is the main production model used by the application during inference.
+
+### Custom CNN (Optional Model)
+
+An alternative architecture implemented for comparison and experimentation. It is not required for running the application.
+
+---
+
+## 8. Installation
+
+Clone the repository
+
+```
+git clone https://github.com/<username>/pcb-defect-inspection-system.git
 cd pcb-defect-inspection-system
+```
+
+Create virtual environment
+
+```
 python -m venv venv
 venv\Scripts\activate
+```
+
+Install dependencies
+
+```
 pip install -r requirements.txt
+```
 
-|| How to Run (Complete Workflow)
+---
 
+## 9. Running the Project
 
-Step 1 — Generate Difference Masks
+The steps must be executed in order.
+
+### Step 1: Generate Difference Masks
+
+```
 python trainings/subtract.py
+```
 
-Step 2 — Detect Contours
+Output:
+data/processed/diff_masks/
+
+---
+
+### Step 2: Detect Contours
+
+```
 python trainings/contours.py
+```
 
-Step 3 — Create Dataset from Annotations
+Output:
+data/processed/contours/
+
+---
+
+### Step 3: Generate Training Dataset from Annotations
+
+```
 python trainings/preprocess_xml_to_rois.py
+```
 
-Step 4 — Train Model
+Output:
+processed_dataset/train/
+processed_dataset/val/
 
-Train Primary Model (EfficientNet):
+---
 
+### Step 4: Train the Main Model (EfficientNet)
+
+```
 python trainings/train_classifier.py
+```
 
+Output:
+models/efficientnet_model.pth
 
-Optional: Train Custom CNN (Experimental):
+---
 
+### Optional: Train Custom CNN
+
+```
 python trainings/train_custom_cnn.py
+```
 
-Step 5 — Test Backend
+---
+
+### Step 5: Test Backend Inference
+
+```
 python src/inference_pipeline.py
+```
 
-Step 6 — Launch UI
+---
+
+### Step 6: Launch User Interface
+
+```
 streamlit run frontend/app.py
+```
 
+Open in browser:
 
+```
+http://localhost:8501
+```
 
-|| Quick Run (Skip Training)
+---
 
-If EfficientNet model already exists:
+## 10. Quick Execution (Without Training)
 
+If the trained EfficientNet model already exists in the models folder:
+
+```
 streamlit run frontend/app.py
+```
 
+---
 
+## 11. Output
 
-||Models
+The application produces:
 
-Model	Usage
-EfficientNet	Main inference model
-Custom CNN	Optional experimental model
+* Annotated PCB image
+* Defect class label
+* Prediction confidence
+* Inspection result
 
+---
 
+## 12. Special Implementation Features
 
-|| Output
+* Automatic dataset creation from XML annotations
+* Config-driven modular architecture
+* Hybrid classical vision and deep learning pipeline
+* Multi-model training framework (EfficientNet primary, Custom CNN optional)
+* End-to-end inspection application
 
-Annotated PCB image
+---
 
-    .Defect type
+## 13. Future Work
 
-    .Confidence score
+* Real-time camera inspection
+* Batch PCB analysis
+* REST API deployment
+* Hardware integration in manufacturing line
+* GPU acceleration support
 
-Inspection result
+---
 
-
-
-|| Key Features
-
-    .Automatic dataset generation from annotations
-
-    .Modular architecture
-
-    .Industrial inspection workflow
-
-    .Graphical interface
-
-    .Extendable pipeline
-
-|| Future Improvements
-
-.Real-time camera inspection
-
-.Batch PCB analysis
-
-.API deployment
-
-.Hardware integration
-
-
-
-
-|| License
+## 14. License
 
 MIT License
 
-|| Author
+---
+
+## 15. Author
 
 Sivaraj V
-AI / Machine Learning Engineer
-
-
+GitHub: [https://github.com/sivarajv04](https://github.com/sivarajv04)
