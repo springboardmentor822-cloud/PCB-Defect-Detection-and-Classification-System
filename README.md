@@ -45,6 +45,76 @@ The trained model learns defect categories from cropped defect images.
 
 ROI Images → Deep Learning Classifier → Defect Label
 
+
+## System Methodology
+
+Visual Architecture Diagram
+
+flowchart TD
+
+
+A[User Upload PCB Image] --> B[Streamlit Frontend]
+
+B --> C[Inference Pipeline]
+
+C --> D[Preprocessing]
+D --> D1[Template Alignment]
+D --> D2[Image Subtraction]
+D --> D3[Noise Filtering]
+
+D3 --> E[Contour Detection]
+E --> F[ROI Extraction]
+
+F --> G[Classification Model]
+
+G --> G1[EfficientNet - Primary]
+G --> G2[Custom CNN - Optional]
+
+G1 --> H[Defect Label]
+G2 --> H
+
+H --> I[Annotated Image Generation]
+I --> J[Display Result to User]
+
+Training Pipeline Architecture
+
+flowchart TD
+
+A[Raw Images + Templates + XML] --> B[Subtraction]
+B --> C[Difference Masks]
+C --> D[Contour Extraction]
+D --> E[ROI Cropping]
+E --> F[Structured Dataset]
+
+F --> G1[Train EfficientNet]
+F --> G2[Train Custom CNN]
+
+G1 --> H[Primary Model Saved]
+G2 --> I[Optional Model Saved]
+
+
+'''
+                User Upload
+                     │
+                     ▼
+              Streamlit Frontend
+                     │
+                     ▼
+             Backend Inference Engine
+                     │
+       ┌─────────────┼─────────────┐
+       │                           │
+  Preprocessing              Classification
+       │                           │
+Image Subtraction           EfficientNet (Primary)
+Contour Detection           Custom CNN (Optional)
+ROI Extraction                    │
+       │                           │
+       └─────────────► Result Generation ◄─────────────┘
+                             │
+                     Annotated Output
+
+'''
 ---
 
 ## 4. Defect Categories
@@ -258,3 +328,4 @@ MIT License
 
 Sivaraj V
 GitHub: [https://github.com/sivarajv04](https://github.com/sivarajv04)
+
