@@ -65,7 +65,7 @@ requirements.txt → Required Python libraries
 pip install -r requirements.txt
 ```
 
-### 2️⃣ Train the Model (Optional)
+### 2️⃣ Train the Model 
 
 ```bash
 python train_model.py
@@ -83,3 +83,16 @@ python evaluate_model.py
 streamlit run app.py
 ```
 
+##📊 Model Performance
+
+The trained model achieved approximately:
+Test Accuracy: ~91%
+Strong precision and recall across most defect classes
+Confusion matrix visualization available in the outputs/ folder
+
+##📈 Evaluation Metrics Used
+Accuracy
+Precision
+Recall
+F1-score
+Confusion Matrix
