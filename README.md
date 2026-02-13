@@ -11,16 +11,17 @@ The system performs:
 - Performance evaluation using accuracy, confusion matrix, and classification report  
 - A simple web interface for visual inspection  
 
-The goal of this project is to automate PCB inspection and reduce manual quality control effort.
+The main objective of this project is to automate the PCB inspection process and reduce dependency on manual quality checking.
 
 ## 🎯 Problem Statement
 
-Manual PCB inspection is time-consuming and prone to human error. Even small defects such as missing holes or open circuits can cause functional failure.
+Manual inspection of PCBs is time-consuming and can lead to human errors, especially when defects are small or subtle. Even minor issues like open circuits or missing holes can cause device failure.
 
-This system aims to:
-- Detect defect regions automatically
-- Classify the defect type accurately
-- Provide evaluation metrics for performance validation
+This project aims to:
+-Detect defect regions automatically using image processing
+-Classify detected defects into predefined categories
+-Evaluate model performance using standard metrics
+-Provide a simple interface for easy testing and visualization
 
 ## 🧠 Defect Classes
 
