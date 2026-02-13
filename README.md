@@ -160,7 +160,8 @@ The following metrics were used to validate performance:
 
 These metrics ensure the model is evaluated properly on unseen test data.
 
-##🔮 Future Improvements
+## 🔮 Future Improvements
+
 
 • Improve accuracy using advanced architectures (e.g., EfficientNet variants)  
 • Add real-time PCB inspection support  
