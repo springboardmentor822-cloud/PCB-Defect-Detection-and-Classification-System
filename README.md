@@ -42,21 +42,72 @@ The model classifies PCB defects into the following categories:
 - Matplotlib
 - Streamlit (for UI)
 
----
-
 ## 📂 Project Structure
 
-models/ → Trained model files  
-outputs/ → Generated output images & confusion matrix  
-test_images/ → Sample PCB test images  
-app.py → Streamlit web application  
-detect_and_classify.py → Defect detection & classification logic  
-evaluate_model.py → Model evaluation script  
-extract_roi.py → ROI extraction logic  
-train_model.py → Model training script  
-requirements.txt → Required Python libraries  
+The repository is organized as follows:
+
+```
+PCB-Defect-Detection-and-Classification-System/
+│
+├── models/
+│   └── pcb_defect_model.h5
+│       Trained deep learning model used for defect classification.
+│
+├── outputs/
+│   ├── output_result.jpg
+│   ├── confusion_matrix.png
+│   └── evaluation_report.txt
+│       Contains generated results, visualizations, and evaluation metrics.
+│
+├── test_images/
+│   └── sample PCB test images
+│       Example PCB images used for inference and demonstration.
+│
+├── app.py
+│       Streamlit web application for interactive defect detection.
+│
+├── detect_and_classify.py
+│       Core pipeline for:
+│       - Template alignment
+│       - Image subtraction
+│       - ROI extraction
+│       - Defect classification
+│
+├── extract_roi.py
+│       Logic for detecting Regions of Interest (defect areas).
+│
+├── train_model.py
+│       Script used to train the CNN model on PCB defect dataset.
+│
+├── evaluate_model.py
+│       Evaluates trained model and generates:
+│       - Accuracy
+│       - Precision
+│       - Recall
+│       - F1-score
+│       - Confusion matrix
+│
+└── requirements.txt
+        List of required Python dependencies.
+```
 
 ---
+
+### 🔎 Explanation
+
+- **models/** → Stores trained model weights  
+- **outputs/** → Stores generated results and evaluation reports  
+- **test_images/** → Sample images for testing the system  
+- **Core Scripts** → Handle training, detection, evaluation, and UI  
+
+This modular structure ensures clean separation between:
+- Model
+- Processing logic
+- Evaluation
+- Interface
+- Results
+
+
 ## 🚀 How to Run the Project
 
 ### 1️⃣ Install Dependencies
