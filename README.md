@@ -1,4 +1,4 @@
-# PCB-Defect-Detection-and-Classification-System
+# PCB Defect Detection and Classification System
 
 ## 📌 Project Overview
 
@@ -41,6 +41,10 @@ The model classifies PCB defects into the following categories:
 - NumPy
 - Matplotlib
 - Streamlit (for UI)
+
+##📦 Dataset
+The model was trained using a labeled PCB defect dataset containing images categorized into six defect classes. The dataset was split into training, validation, and test sets to ensure proper evaluation on unseen data.
+
 
 ## 📂 Project Structure
 
@@ -138,7 +142,7 @@ streamlit run app.py
 
 The trained model achieved approximately:
 
-- **Test Accuracy:** ~91%
+-Test Accuracy on unseen test dataset: ~91%
 - Strong precision and recall across most defect classes
 - Confusion matrix visualization available in the `outputs/` folder
 
@@ -154,4 +158,12 @@ The following metrics were used to validate performance:
 - Confusion Matrix  
 
 These metrics ensure the model is evaluated properly on unseen test data.
+
+##🔮 Future Improvements
+
+• Improve accuracy using advanced architectures (e.g., EfficientNet variants)  
+• Add real-time PCB inspection support  
+• Deploy as a cloud-based quality inspection service  
+• Integrate defect localization heatmaps for better visualization  
+
 
