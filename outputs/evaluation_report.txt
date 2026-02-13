@@ -1,0 +1,19 @@
+PCB Defect Detection Model Evaluation
+
+Test Loss: 0.2357885092496872
+Test Accuracy: 0.9125560522079468
+
+Classification Report:
+
+                 precision    recall  f1-score   support
+
+   Missing_hole       1.00      1.00      1.00        75
+     Mouse_bite       0.98      0.69      0.81        74
+   Open_circuit       0.95      0.97      0.96        73
+          Short       0.96      0.92      0.94        74
+           Spur       0.72      0.96      0.83        74
+Spurious_copper       0.95      0.93      0.94        76
+
+       accuracy                           0.91       446
+      macro avg       0.93      0.91      0.91       446
+   weighted avg       0.93      0.91      0.91       446
