@@ -83,16 +83,24 @@ python evaluate_model.py
 streamlit run app.py
 ```
 
-##📊 Model Performance
+## 📊 Model Performance
 
 The trained model achieved approximately:
-Test Accuracy: ~91%
-Strong precision and recall across most defect classes
-Confusion matrix visualization available in the outputs/ folder
 
-##📈 Evaluation Metrics Used
-Accuracy
-Precision
-Recall
-F1-score
-Confusion Matrix
+- **Test Accuracy:** ~91%
+- Strong precision and recall across most defect classes
+- Confusion matrix visualization available in the `outputs/` folder
+
+
+## 📈 Evaluation Metrics Used
+
+The following metrics were used to validate performance:
+
+- Accuracy  
+- Precision  
+- Recall  
+- F1-score  
+- Confusion Matrix  
+
+These metrics ensure the model is evaluated properly on unseen test data.
+
