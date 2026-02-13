@@ -46,87 +46,40 @@ The model classifies PCB defects into the following categories:
 
 ## 📂 Project Structure
 
-
-models/ → Trained model files
-outputs/ → Generated output images & confusion matrix
-test_images/ → Sample PCB test images
-app.py → Streamlit web application
-detect_and_classify.py → Defect detection & classification logic
-evaluate_model.py → Model evaluation script
-extract_roi.py → ROI extraction logic
-train_model.py → Model training script
-requirements.txt → Required Python libraries
-
+models/ → Trained model files  
+outputs/ → Generated output images & confusion matrix  
+test_images/ → Sample PCB test images  
+app.py → Streamlit web application  
+detect_and_classify.py → Defect detection & classification logic  
+evaluate_model.py → Model evaluation script  
+extract_roi.py → ROI extraction logic  
+train_model.py → Model training script  
+requirements.txt → Required Python libraries  
 
 ---
-
 ## 🚀 How to Run the Project
 
 ### 1️⃣ Install Dependencies
 
-bash
+```bash
 pip install -r requirements.txt
-2️⃣ Train the Model (Optional)
+```
+
+### 2️⃣ Train the Model (Optional)
+
+```bash
 python train_model.py
+```
 
-3️⃣ Evaluate the Model
+### 3️⃣ Evaluate the Model
+
+```bash
 python evaluate_model.py
+```
 
+### 4️⃣ Run the Web Application
 
-This will generate:
-
-Test Accuracy
-
-Confusion Matrix
-
-Classification Report
-
-evaluation_report.txt
-
-4️⃣ Run the Web Application
+```bash
 streamlit run app.py
-
-📊 Model Performance
-
-The trained model achieved approximately:
-
-Test Accuracy: ~91%
-
-Strong precision and recall across most defect classes
-
-Confusion matrix analysis included in outputs folder
-
-📈 Evaluation Metrics Used
-
-Accuracy
-
-Precision
-
-Recall
-
-F1-score
-
-Confusion Matrix
-
-These metrics ensure the model’s performance is validated on unseen test data.
-
-📌 Key Highlights
-
-ROI-based defect detection
-
-CNN-based classification
-
-Automated performance reporting
-
-Clean and simple UI for demonstration
-
-Modular code structure for scalability
-
-🔮 Future Improvements
-
-Improve performance for Spur and Mouse_bite classes
-
-Add real-time PCB camera integration
-
-Deploy as a cloud-based inspection service
+```
 
