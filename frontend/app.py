@@ -266,11 +266,14 @@ def render_auto_detection_mode(detector_path, classifier_path):
             st.image(original_rgb, width="stretch")
         
         # Run detection button
-        if st.button("🚀 Run Detection & Classification", use_container_width=True, key="auto_detect"):
+        if st.button("🚀 Run Detection & Classification", key="auto_detect"):
             with st.spinner("🔄 Running AI models... This may take a moment..."):
                 try:
+                    import time
+                    start_time = time.time()
+                    
                     # Run the pipeline
-                    annotated_image, detections = run_detection_pipeline(
+                    annotated_image, detections, timing_info = run_detection_pipeline(
                         original_image,
                         str(detector_path),
                         str(classifier_path)
@@ -281,8 +284,9 @@ def render_auto_detection_mode(detector_path, classifier_path):
                     st.session_state['detections'] = detections
                     st.session_state['original_image'] = original_image
                     st.session_state['upload_filename'] = uploaded_file.name
+                    st.session_state['timing_info'] = timing_info
                     
-                    st.success("✅ Detection complete!")
+                    st.success(f"✅ Detection complete in {timing_info['total']:.2f}s")
                     st.rerun()
                     
                 except Exception as e:
@@ -298,6 +302,35 @@ def render_auto_detection_mode(detector_path, classifier_path):
             
             # Show detection count
             st.info(f"🔍 Found {len(st.session_state['detections'])} defect(s) in the image")
+            
+            # Show timing breakdown
+            if 'timing_info' in st.session_state:
+                timing = st.session_state['timing_info']
+                total = timing['total']
+                
+                # Color based on speed
+                if total <= 1.0:
+                    speed_color = "🟢"
+                    speed_label = "Excellent"
+                elif total <= 2.0:
+                    speed_color = "🟡"
+                    speed_label = "Good"
+                elif total <= 3.0:
+                    speed_color = "🟠"
+                    speed_label = "Acceptable"
+                else:
+                    speed_color = "🔴"
+                    speed_label = "Slow"
+                
+                st.markdown(f"""<div style='background: linear-gradient(135deg, #1e293b 0%, #334155 100%); padding: 1rem 1.5rem; border-radius: 10px; margin: 0.5rem 0;'>
+                    <p style='color: #94a3b8; margin: 0 0 0.5rem 0; font-size: 0.85rem;'>⏱️ PROCESSING TIME</p>
+                    <p style='color: #f1f5f9; margin: 0; font-size: 1.4rem; font-weight: 700;'>{total:.2f}s {speed_color} {speed_label}</p>
+                    <div style='display: flex; gap: 1.5rem; margin-top: 0.5rem;'>
+                        <span style='color: #94a3b8; font-size: 0.8rem;'>Model Loading: {timing['model_loading']:.3f}s</span>
+                        <span style='color: #94a3b8; font-size: 0.8rem;'>Detection: {timing['detection']:.3f}s</span>
+                        <span style='color: #94a3b8; font-size: 0.8rem;'>Classification: {timing['classification']:.3f}s</span>
+                    </div>
+                </div>""", unsafe_allow_html=True)
             
             # Display detection summary below
             st.divider()
@@ -316,8 +349,7 @@ def render_auto_detection_mode(detector_path, classifier_path):
                     label="📥 Download Annotated Image",
                     data=img_bytes,
                     file_name=f"pcb_defects_{st.session_state.get('upload_filename', 'result.png')}",
-                    mime="image/png",
-                    use_container_width=True
+                    mime="image/png"
                 )
             
             with col_dl2:
@@ -327,12 +359,11 @@ def render_auto_detection_mode(detector_path, classifier_path):
                     label="📊 Download CSV Report",
                     data=csv_bytes,
                     file_name=f"defect_report_{datetime.now().strftime('%Y%m%d_%H%M%S')}.csv",
-                    mime="text/csv",
-                    use_container_width=True
+                    mime="text/csv"
                 )
             
             # Clear results button
-            if st.button("🔄 Clear Results", use_container_width=True, key="auto_clear"):
+            if st.button("🔄 Clear Results", key="auto_clear"):
                 for key in ['annotated_image', 'detections', 'original_image', 'upload_filename']:
                     if key in st.session_state:
                         del st.session_state[key]
@@ -407,11 +438,11 @@ def render_template_comparison_mode(detector_path, classifier_path):
             st.image(test_rgb, width="stretch")
         
         # Run comparison button
-        if st.button("🚀 Run Template Comparison", use_container_width=True, key="template_detect"):
+        if st.button("🚀 Run Template Comparison", key="template_detect"):
             with st.spinner("🔄 Comparing images and detecting defects..."):
                 try:
                     # Run template comparison pipeline
-                    annotated_image, detections = run_template_comparison_pipeline(
+                    annotated_image, detections, timing_info = run_template_comparison_pipeline(
                         template_image,
                         test_image,
                         str(detector_path),
@@ -425,8 +456,9 @@ def render_template_comparison_mode(detector_path, classifier_path):
                     st.session_state['template_image'] = template_image
                     st.session_state['test_image'] = test_image
                     st.session_state['test_filename'] = test_file.name
+                    st.session_state['template_timing_info'] = timing_info
                     
-                    st.success("✅ Comparison complete!")
+                    st.success(f"✅ Comparison complete in {timing_info['total']:.2f}s")
                     st.rerun()
                     
                 except Exception as e:
@@ -445,6 +477,34 @@ def render_template_comparison_mode(detector_path, classifier_path):
             # Show detection count
             st.info(f"🔍 Found {len(st.session_state['template_detections'])} defect(s) in the comparison")
             
+            # Show timing breakdown
+            if 'template_timing_info' in st.session_state:
+                timing = st.session_state['template_timing_info']
+                total = timing['total']
+                
+                if total <= 1.0:
+                    speed_color = "🟢"
+                    speed_label = "Excellent"
+                elif total <= 2.0:
+                    speed_color = "🟡"
+                    speed_label = "Good"
+                elif total <= 3.0:
+                    speed_color = "🟠"
+                    speed_label = "Acceptable"
+                else:
+                    speed_color = "🔴"
+                    speed_label = "Slow"
+                
+                st.markdown(f"""<div style='background: linear-gradient(135deg, #1e293b 0%, #334155 100%); padding: 1rem 1.5rem; border-radius: 10px; margin: 0.5rem 0;'>
+                    <p style='color: #94a3b8; margin: 0 0 0.5rem 0; font-size: 0.85rem;'>⏱️ PROCESSING TIME</p>
+                    <p style='color: #f1f5f9; margin: 0; font-size: 1.4rem; font-weight: 700;'>{total:.2f}s {speed_color} {speed_label}</p>
+                    <div style='display: flex; gap: 1.5rem; margin-top: 0.5rem;'>
+                        <span style='color: #94a3b8; font-size: 0.8rem;'>Model Loading: {timing['model_loading']:.3f}s</span>
+                        <span style='color: #94a3b8; font-size: 0.8rem;'>Detection: {timing['detection']:.3f}s</span>
+                        <span style='color: #94a3b8; font-size: 0.8rem;'>Classification: {timing['classification']:.3f}s</span>
+                    </div>
+                </div>""", unsafe_allow_html=True)
+            
             # Display detection summary
             st.divider()
             display_detection_summary(st.session_state['template_detections'])
@@ -462,8 +522,7 @@ def render_template_comparison_mode(detector_path, classifier_path):
                     label="📥 Download Annotated Image",
                     data=img_bytes,
                     file_name=f"comparison_result_{st.session_state.get('test_filename', 'result.png')}",
-                    mime="image/png",
-                    use_container_width=True
+                    mime="image/png"
                 )
             
             with col_dl2:
@@ -473,12 +532,11 @@ def render_template_comparison_mode(detector_path, classifier_path):
                     label="📊 Download CSV Report",
                     data=csv_bytes,
                     file_name=f"comparison_report_{datetime.now().strftime('%Y%m%d_%H%M%S')}.csv",
-                    mime="text/csv",
-                    use_container_width=True
+                    mime="text/csv"
                 )
             
             # Clear results button
-            if st.button("🔄 Clear Results", use_container_width=True, key="template_clear"):
+            if st.button("🔄 Clear Results", key="template_clear"):
                 for key in ['template_annotated', 'template_detections', 'template_image', 'test_image', 'test_filename']:
                     if key in st.session_state:
                         del st.session_state[key]
