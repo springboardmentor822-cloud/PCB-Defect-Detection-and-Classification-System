@@ -99,7 +99,7 @@ def run_detection_pipeline(
     image: np.ndarray,
     detector_path: str,
     classifier_path: str
-) -> Tuple[np.ndarray, List[Dict]]:
+) -> Tuple[np.ndarray, List[Dict], Dict[str, float]]:
     """
     Run the complete detection and classification pipeline.
     
@@ -109,21 +109,28 @@ def run_detection_pipeline(
         classifier_path: Path to EfficientNet classifier
     
     Returns:
-        Tuple of (annotated_image, detections_list)
+        Tuple of (annotated_image, detections_list, timing_info)
         detections_list contains dicts with keys: bbox, label, confidence
+        timing_info contains timing breakdown in seconds
     """
+    import time
+    pipeline_start = time.time()
     device = ModelLoader.get_device()
     class_names = ModelLoader.get_class_names()
     
     # Load models
+    model_load_start = time.time()
     detector = ModelLoader.load_detector(detector_path)
     classifier = ModelLoader.load_classifier(classifier_path, len(class_names))
+    model_load_time = time.time() - model_load_start
     
     # Run detection with lower confidence threshold to catch more defects
     # conf=0.15 means detect boxes with 15% confidence or higher (default is 0.25)
     # iou=0.45 for non-maximum suppression (default is 0.7)
     print(f"[DEBUG] Running YOLO detection with conf=0.15, iou=0.45")
+    detection_start = time.time()
     results = detector(image, conf=0.15, iou=0.45, verbose=False)
+    detection_time = time.time() - detection_start
     
     detections = []
     annotated_image = image.copy()
@@ -137,6 +144,7 @@ def run_detection_pipeline(
     print(f"[DEBUG] YOLO detected {total_boxes} bounding boxes")
     
     # Process each detection
+    classification_start = time.time()
     processed_count = 0
     for result in results:
         boxes = result.boxes
@@ -177,13 +185,13 @@ def run_detection_pipeline(
             
             # Draw on image
             color = get_color_for_label(label)
-            cv2.rectangle(annotated_image, (x1, y1), (x2, y2), color, 3)
+            cv2.rectangle(annotated_image, (x1, y1), (x2, y2), color, 4)
             
             # Add label with background
             label_text = f"{label}: {conf_score:.2%}"
             font = cv2.FONT_HERSHEY_SIMPLEX
-            font_scale = 0.6
-            thickness = 2
+            font_scale = 1.5
+            thickness = 4
             
             # Get text size for background
             (text_width, text_height), baseline = cv2.getTextSize(
@@ -193,8 +201,8 @@ def run_detection_pipeline(
             # Draw background rectangle
             cv2.rectangle(
                 annotated_image,
-                (x1, y1 - text_height - 10),
-                (x1 + text_width + 10, y1),
+                (x1, y1 - text_height - 14),
+                (x1 + text_width + 14, y1),
                 color,
                 -1
             )
@@ -203,15 +211,26 @@ def run_detection_pipeline(
             cv2.putText(
                 annotated_image,
                 label_text,
-                (x1 + 5, y1 - 5),
+                (x1 + 7, y1 - 7),
                 font,
                 font_scale,
                 (255, 255, 255),
                 thickness
             )
     
+    classification_time = time.time() - classification_start
+    total_time = time.time() - pipeline_start
+    
+    timing_info = {
+        'model_loading': round(model_load_time, 3),
+        'detection': round(detection_time, 3),
+        'classification': round(classification_time, 3),
+        'total': round(total_time, 3)
+    }
+    
     print(f"[DEBUG] Total detections processed: {processed_count}, Total in list: {len(detections)}")
-    return annotated_image, detections
+    print(f"[TIMING] Model Loading: {timing_info['model_loading']}s | Detection: {timing_info['detection']}s | Classification: {timing_info['classification']}s | Total: {timing_info['total']}s")
+    return annotated_image, detections, timing_info
 
 
 def get_color_for_label(label: str) -> Tuple[int, int, int]:
@@ -293,7 +312,7 @@ def run_template_comparison_pipeline(
     detector_path: str,
     classifier_path: str,
     use_subtraction: bool = True
-) -> Tuple[np.ndarray, List[Dict]]:
+) -> Tuple[np.ndarray, List[Dict], Dict[str, float]]:
     """
     Run template comparison pipeline with optional image subtraction.
     
@@ -305,8 +324,11 @@ def run_template_comparison_pipeline(
         use_subtraction: Whether to use image subtraction for preprocessing
     
     Returns:
-        Tuple of (annotated_test_image, detections_list)
+        Tuple of (annotated_test_image, detections_list, timing_info)
     """
+    import time
+    pipeline_start = time.time()
+    
     device = ModelLoader.get_device()
     class_names = ModelLoader.get_class_names()
     
@@ -314,8 +336,10 @@ def run_template_comparison_pipeline(
     template_aligned, test_aligned = read_template_and_test(template_image, test_image)
     
     # Load models
+    model_load_start = time.time()
     detector = ModelLoader.load_detector(detector_path)
     classifier = ModelLoader.load_classifier(classifier_path, len(class_names))
+    model_load_time = time.time() - model_load_start
     
     # Optional: Use image subtraction to highlight differences
     if use_subtraction:
@@ -324,12 +348,15 @@ def run_template_comparison_pipeline(
     
     # Run detection on test image with lower confidence threshold
     print(f"[DEBUG] Running YOLO detection (template mode) with conf=0.15, iou=0.45")
+    detection_start = time.time()
     results = detector(test_aligned, conf=0.15, iou=0.45, verbose=False)
+    detection_time = time.time() - detection_start
     
     detections = []
     annotated_image = test_aligned.copy()
     
     # Process each detection
+    classification_start = time.time()
     for result in results:
         boxes = result.boxes
         for box in boxes:
@@ -362,13 +389,13 @@ def run_template_comparison_pipeline(
             
             # Draw on image with color-coded boxes
             color = get_color_for_label(label)
-            cv2.rectangle(annotated_image, (x1, y1), (x2, y2), color, 3)
+            cv2.rectangle(annotated_image, (x1, y1), (x2, y2), color, 4)
             
             # Add label with background
             label_text = f"{label}: {conf_score:.2%}"
             font = cv2.FONT_HERSHEY_SIMPLEX
-            font_scale = 0.6
-            thickness = 2
+            font_scale = 1.5
+            thickness = 4
             
             # Get text size for background
             (text_width, text_height), baseline = cv2.getTextSize(
@@ -378,8 +405,8 @@ def run_template_comparison_pipeline(
             # Draw background rectangle
             cv2.rectangle(
                 annotated_image,
-                (x1, y1 - text_height - 10),
-                (x1 + text_width + 10, y1),
+                (x1, y1 - text_height - 14),
+                (x1 + text_width + 14, y1),
                 color,
                 -1
             )
@@ -388,12 +415,23 @@ def run_template_comparison_pipeline(
             cv2.putText(
                 annotated_image,
                 label_text,
-                (x1 + 5, y1 - 5),
+                (x1 + 7, y1 - 7),
                 font,
                 font_scale,
                 (255, 255, 255),
                 thickness
             )
     
-    return annotated_image, detections
+    classification_time = time.time() - classification_start
+    total_time = time.time() - pipeline_start
+    
+    timing_info = {
+        'model_loading': round(model_load_time, 3),
+        'detection': round(detection_time, 3),
+        'classification': round(classification_time, 3),
+        'total': round(total_time, 3)
+    }
+    
+    print(f"[TIMING] Model Loading: {timing_info['model_loading']}s | Detection: {timing_info['detection']}s | Classification: {timing_info['classification']}s | Total: {timing_info['total']}s")
+    return annotated_image, detections, timing_info
 
