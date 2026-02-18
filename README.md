@@ -305,7 +305,7 @@ MIT License
 
 ## 15. Author
 
-Sivaraj V
-GitHub: [https://github.com/sivarajv04](https://github.com/sivarajv04)
+Yuvraj Singh
+GitHub: [https://github.com/Yuvi-Specs]
 
 
