@@ -62,4 +62,8 @@ Processing Speed: Real-time inference with low latency per ROI.
 
 Sample UI Preview
 The Web Interface allows users to upload "Golden Template" and "Test Subject" images to visualize detection results interactively.
-<img width="1026" height="530" alt="image" src="https://github.com/user-attachments/assets/d2ca8d56-4e8c-486e-af37-e03a87d7d640" />
+<img width="1409" height="706" alt="image" src="https://github.com/user-attachments/assets/25e9e576-fd03-487c-89d8-90575677a34f" />
+
+<img width="1409" height="706" alt="image" src="https://github.com/user-attachments/assets/69a7bf2b-c6d7-4be8-bdfd-e1322761b728" />
+
+
