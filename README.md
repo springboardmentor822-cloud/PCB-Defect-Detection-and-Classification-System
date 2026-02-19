@@ -33,7 +33,7 @@ src/
 │ └── Streamlit interface
 │
 └── module6_yolo/
-└── YOLO-based detection model
+  └── YOLO-based detection model
 ```
 
 ## Modules Description
@@ -81,7 +81,7 @@ src/
 
 This project uses a hybrid approach combining classical preprocessing, object detection, and deep learning-based classification.
 
-### 1️⃣ YOLO Model (Object Detection)
+### 1️⃣ YOLO Model
 
 The YOLO (You Only Look Once) model is used for real-time PCB defect detection.
 
@@ -103,7 +103,7 @@ The YOLO (You Only Look Once) model is used for real-time PCB defect detection.
 - Confidence score
 - Defect class label
 
-### 2️⃣ EfficientNet Model (Defect Classification)
+### 2️⃣ EfficientNet Model 
 
 EfficientNet is used for fine-grained defect classification after ROI extraction.
 
