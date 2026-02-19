@@ -140,7 +140,7 @@ EfficientNet is used for fine-grained defect classification after ROI extraction
 The model detects defective regions and generates bounding boxes with confidence scores.
 
 
-### 🔹 2. Defect Classification Output
+### 🔹 2. EfficientNet Classification Output
 
 ![Classification Output](assets/efficientnet_output_image.png)
 ![Classification Model Info](assets/model_info.png)
