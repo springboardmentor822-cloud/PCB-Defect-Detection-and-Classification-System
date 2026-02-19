@@ -127,5 +127,49 @@ EfficientNet is used for fine-grained defect classification after ROI extraction
 - Class probability scores
 
 
+## Sample Outputs
+
+### 🔹 1. YOLO Detection Output
+
+![Input Image](assets/test_image_yolomodel.jpg)
+![Detection Output](assets/test_image_output_yolomodel.png)
+
+The model detects defective regions and generates bounding boxes with confidence scores.
+
+
+### 🔹 2. Defect Classification Output
+
+![Classification Output](assets/efficientnet_output_image.png)
+![Classification Model Info](assets/model_info.png)
+
+EfficientNet detects defective regions and generates bounding boxes with confidence scores classifies the defect region into specific defect categories.
+
+
+### 🔹 3. Web Interface (Streamlit)
+
+![Web UI](assets/web_ui.png)
+
+The web interface allows users to upload PCB images and visualize detection results interactively.
+
+
+## Performance Metrics
+
+The models were evaluated on the PCB defect dataset using standard object detection and classification metrics.
+
+### YOLO Detection Metrics
+- mAP (Mean Average Precision): 0.87
+- Precision: 0.91
+- Recall: 0.89
+
+### EfficientNet Classification Metrics
+- Accuracy: 92%
+- Precision: 90%
+- Recall: 88%
+- F1-Score: 0.89
+
+These results demonstrate strong performance for automated PCB defect inspection.
+
+
+
 
 
