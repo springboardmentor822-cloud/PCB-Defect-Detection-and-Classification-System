@@ -27,17 +27,17 @@ The primary goal is to simulate an end-to-end industrial AOI workflow.
 
 The implemented code aims to:
 
-Automate PCB defect detection and classification
+-Automate PCB defect detection and classification
 
-Reduce manual inspection effort
+-Reduce manual inspection effort
 
-Extract ROIs automatically from difference masks
+-Extract ROIs automatically from difference masks
 
-Evaluate predictions using IoU matching
+-Evaluate predictions using IoU matching
 
-Provide an interactive web interface
+-Provide an interactive web interface
 
-Support deployment-ready modular design
+-Support deployment-ready modular design
 
 ## 3. System Methodology
 
@@ -87,147 +87,147 @@ Purpose: Localize potential defect regions.
 
 #### Steps performed:
 
-Resize template to match test image
+-Resize template to match test image
 
-Compute absolute difference
+-Compute absolute difference
 
-Apply OTSU threshold
+-Apply OTSU threshold
 
-Perform morphological opening
+-Perform morphological opening
 
-Extract contours
+-Extract contours
 
-Filter small regions
+-Filter small regions
 
-Return ROIs and bounding boxes
+-Return ROIs and bounding boxes
 
 *Why this is done:*
 
-Difference imaging highlights manufacturing defects
+-Difference imaging highlights manufacturing defects
 
-Morphology removes noise
+-Morphology removes noise
 
-Contour filtering reduces false positives
+-Contour filtering reduces false positives
 
 **classify(model, rois, conf_thresh)**
 Purpose: Classify each detected ROI.
 
 *Steps:*
 
-Convert ROI to PIL image
+-Convert ROI to PIL image
 
-Apply EfficientNet preprocessing
+-Apply EfficientNet preprocessing
 
-Run forward pass
+-Run forward pass
 
-Apply softmax
+-Apply softmax
 
-Filter by confidence threshold
+-Filter by confidence threshold
 
 *Why:*
 
-Converts detection pipeline into semantic defect classification
+-Converts detection pipeline into semantic defect classification
 
-Confidence filtering reduces weak predictions
+-Confidence filtering reduces weak predictions
 
 **read_xml(xml_path)**
 Purpose: Parse ground truth annotations.
 
 Extracts:
 
-Defect class
+-Defect class
 
-Bounding box coordinates
+-Bounding box coordinates
 
 *Why:*
 
-Required for quantitative evaluation
+-Required for quantitative evaluation
 
-Enables IoU-based matching
+-Enables IoU-based matching
 
 **iou(boxA, boxB)**
 Purpose: Compute Intersection over Union.
 
 *Why:*
 
-Standard metric for detection evaluation
+-Standard metric for detection evaluation
 
-Used to match predictions with ground truth
+-Used to match predictions with ground truth
 
 **nms(boxes, scores)**
 Purpose: Remove duplicate detections.
 
 *Why:*
 
-Difference imaging often produces overlapping boxes
+-Difference imaging often produces overlapping boxes
 
-NMS keeps highest-confidence prediction
+-NMS keeps highest-confidence prediction
 
 ### Module 3 — ROI Classification Evaluation
 
 This module performs full dataset evaluation.
 
-Process Flow
+*Process Flow*
 
 For each PCB image:
 
-Load template and test image
+-Load template and test image
 
-Detect ROIs
+-Detect ROIs
 
-Classify defects
+-Classify defects
 
-Apply NMS
+-Apply NMS
 
-Match with ground truth using IoU
+-Match with ground truth using IoU
 
-Update TP, FP, FN
+-Update TP, FP, FN
 
-Save visualization
+-Save visualization
 
 **Metrics Computed**
 
-True Positives (TP)
+-True Positives (TP)
 
-False Positives (FP)
+-False Positives (FP)
 
-False Negatives (FN)
+-False Negatives (FN)
 
-Precision
+-Precision
 
-Recall
+-Recall
 
-F1 Score
+-F1 Score
 
-Prediction Match Rate
+-Prediction Match Rate
 
-Visualization
+-Visualization
 
 **The code generates:**
 
-Green boxes → predictions
+-Green boxes → predictions
 
-Blue boxes → ground truth
+-Blue boxes → ground truth
 
-Saved debug image
+-Saved debug image
 
-Reason:
+*Reason:*
 
-Helps visually inspect model behavior
+-Helps visually inspect model behavior
 
-Useful for error analysis
+-Useful for error analysis
 
 ### Module 4 — Performance Measurement
 
 Final metrics are computed as:
 
-Precision = TP / (TP + FP)
+-Precision = TP / (TP + FP)
 
-Recall = TP / (TP + FN)
+-Recall = TP / (TP + FN)
 
-F1 Score = harmonic mean
+-F1 Score = harmonic mean
 
-Match Rate = detection coverage
+-Match Rate = detection coverage
 
 This module validates the effectiveness of the hybrid AOI pipeline.
 
@@ -235,186 +235,186 @@ This module validates the effectiveness of the hybrid AOI pipeline.
 
 This module provides the user interface.
 
-Model Loading
+**Model Loading**
 
 Uses:
 
-EfficientNet-B0 backbone
+-EfficientNet-B0 backbone
 
-Custom classifier head
+-Custom classifier head
 
-GPU/CPU auto selection
+-GPU/CPU auto selection
 
-Streamlit resource caching
+-Streamlit resource caching
 
-Why:
+*Why:*
 
-Ensures fast repeated inference
+-Ensures fast repeated inference
 
-Production-style deployment
+-Production-style deployment
 
-Image Alignment
+**Image Alignment**
 
 Function: align_images()
 
-Technique:
+*Technique:*
 
-ORB feature detection
+-ORB feature detection
 
-Brute-force matching
+-Brute-force matching
 
-Homography estimation
+-Homography estimation
 
-Perspective warping
+-Perspective warping
 
-Why:
+*Why:*
 
-Real PCB captures may be slightly shifted
+-Real PCB captures may be slightly shifted
 
-Alignment improves subtraction quality
+-Alignment improves subtraction quality
 
-Improved Defect Detection
+-Improved Defect Detection
 
-Enhancements over training pipeline:
+-Enhancements over training pipeline:
 
-Gaussian blur for noise reduction
+-Gaussian blur for noise reduction
 
-Morphological open + close
+-Morphological open + close
 
-Area filtering
+-Area filtering
 
-Thin-region rejection
+-Thin-region rejection
 
-Purpose:
+*Purpose:*
 
 Reduce false positives in real-world images
 
 ### Module 6 — End-to-End Web Pipeline
 
-Main function: run_pipeline()
+**Main function: run_pipeline()**
 
-Steps:
+*Steps:*
 
-Read images
+-Read images
 
-Align test to template
+-Align test to template
 
-Detect defects
+-Detect defects
 
-Display mask
+-Display mask
 
-Classify ROIs
+-Classify ROIs
 
-Draw bounding boxes
+-Draw bounding boxes
 
-Count defects
+-Count defects
 
-Return annotated image
+-Return annotated image
 
-Streamlit Interface Features
+**Streamlit Interface Features**
 
 The web app provides:
 
-Template upload
+-Template upload
 
-Test image upload
+-Test image upload
 
-One-click detection
+-One-click detection
 
-ROI count display
+-ROI count display
 
-Annotated image preview
+-Annotated image preview
 
-Download button
+-Download button
 
-Cloudflare public link support
+-Cloudflare public link support
 
 ## 5. Defect Categories
 
 The classifier predicts six PCB defect classes:
 
-Missing Hole
+1) Missing Hole
 
-Mouse Bite
+2) Mouse Bite
 
-Open Circuit
+3) Open Circuit
 
-Short
+4) Short
 
-Spur
+5) Spur
 
-Spurious Copper
+6) Spurious Copper
 
 ## 6. Model Used
 EfficientNet-B0 
 
 **Role:**
 
-ROI classification
+-ROI classification
 
-Production inference
+-Production inference
 
 **Advantages:**
 
-Lightweight
+-Lightweight
 
-High accuracy
+-High accuracy
 
-Transfer learning friendly
+-Transfer learning friendly
 
 ## 7. Output
 
 The implemented system generates:
 
-Annotated PCB image
+-Annotated PCB image
 
-Predicted defect labels
+-Predicted defect labels
 
-Confidence scores
+-Confidence scores
 
-ROI count
+-ROI count
 
-Evaluation metrics
+-Evaluation metrics
 
-Debug visualization
+-Debug visualization
 
 ## 8. Special Implementation Features
 
 Special design elements in the codes:
 
-Hybrid CV + Deep Learning pipeline
+-Hybrid CV + Deep Learning pipeline
 
-OTSU-based automatic thresholding
+-OTSU thresholding
 
-ORB-based alignment
+-ORB-based alignment
 
-Non-Maximum Suppression
+-Non-Maximum Suppression
 
-XML-based evaluation
+-XML-based evaluation
 
-Streamlit interactive UI
+-Streamlit interactive UI
 
-Cloudflare public deployment
+-Cloudflare public deployment
 
-Confidence-based filtering
+-Confidence-based filtering
 
 ## 9. Future Scope
 
 The current implementation can be extended with:
 
-Better ROI filtering
+-Better ROI filtering
 
-Advanced augmentation
+-Advanced augmentation
 
-Hard negative mining
+-Hard negative mining
 
-Real-time camera input
+-Real-time camera input
 
-Batch inspection
+-Batch inspection
 
-REST API deployment
+-REST API deployment
 
-GPU optimization
+-GPU optimization
 
 ## 10. License
 
@@ -422,5 +422,6 @@ MIT License
 
 ## 11. Author
 
-[Prachi Sisodia]
+Prachi Sisodia
+
 Github link: https://github.com/pstellar
