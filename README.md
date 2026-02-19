@@ -165,8 +165,6 @@ The models were evaluated on the PCB defect dataset using standard object detect
 - Accuracy: 92%
 - Precision: 90%
 - Recall: 88%
-- F1-Score: 0.89
-
 These results demonstrate strong performance for automated PCB defect inspection.
 
 
