@@ -9,7 +9,7 @@ The **PCB Defect Detection System** is a web-based application designed to compa
 
 ### 1) Main Upload Interface
 
-![App_interface_1](Web_app/App_interface_1.png)
+![Main_interface](App_interface_1.png)
 
 The main screen allows users to configure and run defect analysis.
 
@@ -40,7 +40,7 @@ Each upload area supports:
 
 ### 2️⃣ Analysis Result Interface
 
-![App_interface_2](Web_app/App_interface_2.png)
+![Result_interface](App_interface_2.png)
 
 After processing, the system displays the results in a structured layout.
 
