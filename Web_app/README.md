@@ -38,7 +38,7 @@ Each upload area supports:
 
 ---
 
-### 2️⃣ Analysis Result Interface
+### 2) Analysis Result Interface
 
 ![Result_interface](App_interface_2.png)
 
