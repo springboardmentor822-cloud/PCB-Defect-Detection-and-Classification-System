@@ -2,7 +2,6 @@
 
 ### Intelligent AOI Application using Computer Vision and Deep Learning
 
----
 
 ## 1. Overview
 
@@ -12,7 +11,6 @@ This project presents a complete automated PCB inspection pipeline that integrat
 
 The application detects defect regions, classifies them, and generates a structured inspection result through an interactive interface.
 
----
 
 ## 2. Project Goals
 
@@ -23,7 +21,6 @@ The application detects defect regions, classifies them, and generates a structu
 * Provide an interactive inspection dashboard
 * Enable future industrial integration
 
----
 
 ## 3. System Workflow
 
@@ -42,7 +39,6 @@ Raw PCB Image + Template + XML Annotation
 
 This approach eliminates manual cropping and prepares a clean dataset for training.
 
----
 
 ### Stage 2 — Defect Classification
 
@@ -52,7 +48,6 @@ ROI Image
 → Neural Network Classifier
 → Defect Label + Confidence Score
 
----
 
 ## 4. Inference Pipeline Architecture
 
@@ -65,7 +60,6 @@ ROI Image
 7. Annotated result generation
 8. Display in Streamlit interface
 
----
 
 ## 5. Training Pipeline Architecture
 
@@ -78,7 +72,6 @@ Raw Images + Templates + XML
 → Model Training
 → Saved Trained Model
 
----
 
 ## 6. Supported Defect Categories
 
@@ -91,11 +84,9 @@ The system classifies the following PCB defects:
 * Spur
 * Spurious Copper
 
----
 
 ## 7. Project Structure
 
-```
 project/
 │
 ├── frontend/              Streamlit user interface
@@ -109,9 +100,7 @@ project/
 ├── processed_dataset/     Final structured dataset
 │
 └── README.md
-```
 
----
 
 ## 8. Models Implemented
 
@@ -123,31 +112,23 @@ The main production model used during inference. It provides strong accuracy whi
 
 A lightweight convolutional network implemented for comparative experimentation. Optional and not required for application execution.
 
----
 
 ## 9. Installation
 
 Clone the repository:
 
-```
 git clone https://github.com/springboardmentor822-cloud/PCB-Defect-Detection-and-Classification-System.git
 cd PCB-Defect-Detection-and-Classification-System
-```
 
 Create virtual environment:
 
-```
 python -m venv venv
 venv\Scripts\activate
-```
 
 Install dependencies:
 
-```
 pip install -r requirements.txt
-```
 
----
 
 ## 10. Running the System
 
@@ -155,83 +136,59 @@ Execute the following steps sequentially:
 
 ### 1️⃣ Generate Difference Masks
 
-```
 python trainings/subtract.py
-```
 
 Output: `data/processed/diff_masks/`
 
----
 
 ### 2️⃣ Detect Contours
 
-```
 python trainings/contours.py
-```
 
 Output: `data/processed/contours/`
 
----
 
 ### 3️⃣ Generate Training Dataset
 
-```
 python trainings/preprocess_xml_to_rois.py
-```
 
 Output:
 `processed_dataset/train/`
 `processed_dataset/val/`
 
----
 
 ### 4️⃣ Train EfficientNet Model
 
-```
 python trainings/train_classifier.py
-```
 
 Output:
 `models/efficientnet_model.pth`
 
----
 
 ### Optional: Train Custom CNN
 
-```
 python trainings/train_custom_cnn.py
-```
 
----
 
 ### 5️⃣ Run Backend Inference
 
-```
 python src/inference_pipeline.py
-```
 
----
 
 ### 6️⃣ Launch Web Interface
 
-```
 streamlit run frontend/app.py
-```
 
 Open in browser:
 `http://localhost:8501`
 
----
 
 ## 11. Quick Start (Without Training)
 
 If a trained model already exists in the `models` directory:
 
-```
 streamlit run frontend/app.py
-```
 
----
 
 ## 12. Output
 
@@ -242,7 +199,6 @@ The system generates:
 * Prediction confidence score
 * Final inspection result
 
----
 
 ## 13. Key Features
 
@@ -252,7 +208,6 @@ The system generates:
 * Multi-model training framework
 * End-to-end inspection simulation
 
----
 
 ## 14. Future Enhancements
 
@@ -262,13 +217,11 @@ The system generates:
 * GPU optimization
 * Manufacturing line hardware integration
 
----
 
 ## 15. License
 
 MIT License
 
----
 
 ## 16. Author
 
