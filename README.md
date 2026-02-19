@@ -1,8 +1,9 @@
-Project Overview
+PROJECT OVERVIEW
+
 This project implements a comprehensive AI-driven pipeline for detecting and classifying manufacturing defects in Printed Circuit Boards (PCBs). By combining Classical Computer Vision (OpenCV) for precise localization and Deep Learning (EfficientNet-B0) for intelligent classification, the system automates the quality inspection process.
 
 
-Project Architecture
+PROJECT ARCHITECTURE
 src/
 ├── module1_preprocessing/   # Template subtraction & Morphological cleaning
 ├── module2_roi/             # ROI extraction & Padding-based cropping
@@ -10,7 +11,7 @@ src/
 ├── module4_evaluation/      # Confusion matrix & Classification reports
 └── module5_web_ui/          # Streamlit-based interactive dashboard (app.py)
 
-Modules Description
+MODEL DESCRIPTION
 
 Module 1 – Image Preprocessing
 Template Alignment: Aligning "Golden Template" with the test PCB image.
@@ -40,7 +41,7 @@ Analytics: Visual metric cards for "Precision Match Rate" and "Inference Latency
 
 Export: One-click download for annotated images and prediction logs (CSV).
 
-Technologies Used
+TECHNOLGIES USED
 Languages: Python 3.x
 
 Computer Vision: OpenCV, googlcolab
