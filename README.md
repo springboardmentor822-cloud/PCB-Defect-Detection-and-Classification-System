@@ -1,4 +1,4 @@
- 🔍 PCB Defect Detection and Classification System
+PCB Defect Detection and Classification System
 ---
 
 An automated system that detects and classifies defects in Printed Circuit Board (PCB) images using computer vision and deep learning techniques. The system compares a reference PCB template with a test image, highlights defect regions, classifies defects, and provides downloadable results through a user-friendly interface.
@@ -67,14 +67,14 @@ Total defect count and statistics
 
 Technologies Used
 
-Python
-OpenCV
-TensorFlow / Keras
-EfficientNetB0
-Streamlit
-NumPy
-Pandas
-scikit-learn
+1.Python
+2.OpenCV
+3.TensorFlow / Keras
+4.EfficientNetB0
+5.Streamlit
+6.NumPy
+7.Pandas
+8.scikit-learn
 
 ---
 
