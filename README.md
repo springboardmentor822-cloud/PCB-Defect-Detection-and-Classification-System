@@ -165,7 +165,35 @@ The models were evaluated on the PCB defect dataset using standard object detect
 - Accuracy: 92%
 - Precision: 90%
 - Recall: 88%
-These results demonstrate strong performance for automated PCB defect inspection.
+
+
+## Training & Evaluation Results
+
+### YOLO Detection Model Performance
+
+#### Training Curves
+![YOLO Results](assets/results.png)
+
+#### Confusion Matrix
+![YOLO Confusion Matrix](assets/confusion_matrix_normalized.png)
+
+#### Precision Confidence Curve
+![YOLO Precision Confidence Curve](assets/BoxP_curve.png.png)
+
+
+### EfficientNet Classification Performance
+
+#### Training Accuracy & Loss
+![EfficientNet Training](assets/training_loss_curve.png)
+
+#### Confusion Matrix
+![EfficientNet Confusion Matrix](assets/confusion_matrix.png)
+
+
+The evaluation metrics indicate that the hybrid YOLO + EfficientNet pipeline performs reliably for automated PCB defect detection and classification tasks.
+
+The model achieves strong detection accuracy while maintaining computational efficiency suitable for industrial deployment.
+
 
 
 
