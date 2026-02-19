@@ -1,12 +1,17 @@
 # PCB-Defect-Detection-and-Classification-System
 ## Project Overview
 
-This project implements a modular pipeline for detecting and classifying defects in Printed Circuit Boards (PCBs).  
-The system combines classical image preprocessing techniques with deep learning (YOLO-based model) for accurate defect detection.
+## Project Overview
 
-The architecture is designed in a structured and scalable manner under the `src/` directory.
+This project presents a modular deep learning pipeline for automated defect detection and classification in Printed Circuit Boards (PCBs).
+
+The system integrates classical image preprocessing techniques with advanced deep learning models to achieve robust and accurate inspection. A YOLO-based object detection model is used to localize defect regions, while an EfficientNet-based classifier performs fine-grained defect classification.
+
+The architecture follows a structured and scalable design under the `src/` directory, ensuring modularity, maintainability, and ease of future enhancements.
+
 
 ## Project Architecture
+```
 src/
 │
 ├── module1_preprocessing/
@@ -31,7 +36,7 @@ src/
 │
 └── module6_yolo/
 └── YOLO-based detection model
-
+```
 
 ## Modules Description
 
