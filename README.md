@@ -3,21 +3,6 @@
 
 An automated system that detects and classifies defects in Printed Circuit Board (PCB) images using computer vision and deep learning techniques. The system compares a reference PCB template with a test image, highlights defect regions, classifies defects, and provides downloadable results through a user-friendly interface.
 
----
-
-  Table of Contents
-- [About the Project](#about-the-project)
-- [Features](#features)
-- [Defect Types](#defect-types)
-- [Folder Structure](#folder-structure)
-- [Installation](#installation)
-- [Running the App](#running-the-app)
-- [Outputs](#outputs)
-- [Performance & Contributions](#performance--contributions)
-- [Technologies Used](#technologies-used)
-- [Future Improvements](#future-improvements)
-- [Author](#author)
-
 
 ---
 
@@ -55,7 +40,47 @@ The system supports detection and classification of the following PCB defects:
 
 ---
 
+System Architecture
+
+1. Image Upload (Streamlit UI)  
+2. Image Preprocessing (Grayscale + Resize)  
+3. Image Subtraction  
+4. Thresholding & Mask Generation  
+5. Contour Detection  
+6. ROI Extraction  
+7. Defect Classification  
+8. Annotated Output + CSV Export
 
 
+---
+
+Output
+
+The system produces:
+Annotated PCB image with bounding boxes
+Defect type and confidence score
+Detection time
+CSV log file with defect details
+Total defect count and statistics
+
+---
+
+Technologies Used
+
+Python
+OpenCV
+TensorFlow / Keras
+EfficientNetB0
+Streamlit
+NumPy
+Pandas
+scikit-learn
+
+---
+
+Author
+
+Thanmai-Pamala  
+https://github.com/Thanmai-Pamala
 
 
