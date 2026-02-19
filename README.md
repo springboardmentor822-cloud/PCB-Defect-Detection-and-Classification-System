@@ -1,151 +1,56 @@
-PCB Defect Detection and Classification System
-Project Overview
+ 🔍 PCB Defect Detection and Classification System
+---
 
-This project is an automated PCB (Printed Circuit Board) Defect Detection and Classification System that uses computer vision and deep learning techniques to detect and classify defects in PCB images.
+An automated system that detects and classifies defects in Printed Circuit Board (PCB) images using computer vision and deep learning techniques. The system compares a reference PCB template with a test image, highlights defect regions, classifies defects, and provides downloadable results through a user-friendly interface.
 
-The system compares a test PCB image with a reference template, identifies defect regions, classifies them into predefined categories, and displays results through a Streamlit web interface.
+---
+
+  Table of Contents
+1. [About the Project](#about-the-project)  
+2. [Demo Screenshot](#demo-screenshot)  
+3. [Features](#features)  
+4. [Defect Types](#defect-types)  
+5. [Folder Structure](#folder-structure)  
+6. [Installation](#installation)  
+7. [Running the App](#running-the-app)  
+8. [Outputs](#outputs)  
+9. [ Performance & Contributions](#performance--contributions)  
+10. [Technologies Used](#technologies-used)  
+11. [Future Improvements](#future-improvements)  
+12. [Author](#author)
+
+---
+
+About the Project
+This project aims to automate PCB inspection, reducing manual effort and increasing accuracy in defect detection. By integrating classical image processing with a deep learning classifier, the system detects defect regions, identifies the defect type, and presents results in an intuitive web application.
+
+---
+
+Demo Screenshot
+*(Add a screenshot image of your Streamlit UI here if you have one)*
+
+---
 
 Features
+-  Upload PCB images through web interface  
+-  Auto defect localization using image subtraction  
+-  Classification of defect types  
+-  Confidence scores and statistics  
+-  Shows detection time in UI  
+-  Download annotated image  
+-  Export detailed CSV logs
 
-Template-based defect detection
-
-Automatic contour detection
-
-Multi-class defect classification
-
-Confidence scoring
-
-Real-time UI using Streamlit
-
-Downloadable annotated images
-
-CSV defect logs generation
-
-Detection time display
+---
 
 Defect Types Detected
+The system supports detection and classification of the following PCB defects:
+- **Missing Hole**  
+- **Mouse Bite**  
+- **Open Circuit**  
+- **Short Circuit**  
+- **Spur**  
+- **Spurious Copper**
 
-Missing Hole
+---
 
-Mouse Bite
-
-Open Circuit
-
-Short Circuit
-
-Spur
-
-Spurious Copper
-
-System Architecture
-
-Image Upload (Streamlit UI)
-
-Image Preprocessing (Grayscale + Resize)
-
-Image Subtraction
-
-Thresholding & Mask Generation
-
-Contour Detection
-
-ROI Extraction
-
-Defect Classification
-
-Annotated Output + CSV Export
-
-Project Structure
-pcb defect detection/
-│
-├── app/
-│   └── app.py
-│
-├── src/
-│   ├── imageprocessing.py
-│   └── train_model.py
-│
-├── dataset/
-│
-├── output/
-│   ├── images/
-│   └── logs/
-│
-├── pcb_defect_model.h5
-├── requirements.txt
-└── README.md
-
-⚙️ Installation
-1️⃣ Clone the Repository
-git clone <your-repo-link>
-cd pcb defect detection
-
-2️⃣ Create Virtual Environment
-python -m venv venv
-venv\Scripts\activate
-
-3️⃣ Install Dependencies
-pip install -r requirements.txt
-
-▶️ Run the Application
-cd app
-streamlit run app.py
-
-
-Then open:
-
-http://localhost:8501
-
-📊 Output
-
-The system generates:
-
-Annotated PCB image with bounding boxes
-
-Defect type and confidence score
-
-Detection time
-
-CSV log file with defect details
-
-Total defect count and statistics
-
-🛠 Technologies Used
-
-Python
-
-OpenCV
-
-TensorFlow / Keras
-
-EfficientNetB0
-
-Streamlit
-
-NumPy
-
-Pandas
-
-scikit-learn
-
-Project Performance
-Average Detection Time: ~0.842 seconds per image
-Average Prediction Confidence: ~89 %
-Overall Model Accuracy: ~87 %
-
-
-🔮 Future Improvements
-
-Real-time camera-based PCB inspection
-
-YOLO-based object detection
-
-Deployment on cloud server
-
-Improved classification accuracy
-
-Industrial-scale dataset integration
-
-👨‍💻 Author
-
-Thanmai
+Folder Structure
