@@ -54,3 +54,20 @@ The system supports detection and classification of the following PCB defects:
 ---
 
 Folder Structure
+pcb defect detection/
+│
+├── app/
+│ └── app.py # Web UI
+├── src/
+│ ├── imageprocessing.py # Detection & ROI logic
+│ └── train_model.py # Model training
+├── dataset/ # Image dataset
+├── output/
+│ ├── images/ # Annotated output
+│ └── logs/ # CSV logs
+├── pcb_defect_model.h5 # Trained model
+├── requirements.txt # Dependencies
+└── README.md # Project overview
+
+
+
