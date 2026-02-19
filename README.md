@@ -6,18 +6,18 @@ An automated system that detects and classifies defects in Printed Circuit Board
 ---
 
   Table of Contents
-1. [About the Project](#about-the-project)  
-2. [Demo Screenshot](#demo-screenshot)  
-3. [Features](#features)  
-4. [Defect Types](#defect-types)  
-5. [Folder Structure](#folder-structure)  
-6. [Installation](#installation)  
-7. [Running the App](#running-the-app)  
-8. [Outputs](#outputs)  
-9. [ Performance & Contributions](#performance--contributions)  
-10. [Technologies Used](#technologies-used)  
-11. [Future Improvements](#future-improvements)  
-12. [Author](#author)
+- [About the Project](#about-the-project)
+- [Features](#features)
+- [Defect Types](#defect-types)
+- [Folder Structure](#folder-structure)
+- [Installation](#installation)
+- [Running the App](#running-the-app)
+- [Outputs](#outputs)
+- [Performance & Contributions](#performance--contributions)
+- [Technologies Used](#technologies-used)
+- [Future Improvements](#future-improvements)
+- [Author](#author)
+
 
 ---
 
@@ -27,7 +27,9 @@ This project aims to automate PCB inspection, reducing manual effort and increas
 ---
 
 Demo Screenshot
-*(Add a screenshot image of your Streamlit UI here if you have one)*
+<img width="866" height="844" alt="image" src="https://github.com/user-attachments/assets/95a2d072-b18e-4bbf-80df-6ce41ec63593" />
+
+<img width="795" height="760" alt="image" src="https://github.com/user-attachments/assets/e2d690ce-3437-49af-8398-f590e18d0690" />
 
 ---
 
@@ -53,21 +55,7 @@ The system supports detection and classification of the following PCB defects:
 
 ---
 
-Folder Structure
-pcb defect detection/
-│
-├── app/
-│ └── app.py # Web UI
-├── src/
-│ ├── imageprocessing.py # Detection & ROI logic
-│ └── train_model.py # Model training
-├── dataset/ # Image dataset
-├── output/
-│ ├── images/ # Annotated output
-│ └── logs/ # CSV logs
-├── pcb_defect_model.h5 # Trained model
-├── requirements.txt # Dependencies
-└── README.md # Project overview
+
 
 
 
