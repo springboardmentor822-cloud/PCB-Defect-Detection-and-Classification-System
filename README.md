@@ -178,7 +178,7 @@ The models were evaluated on the PCB defect dataset using standard object detect
 ![YOLO Confusion Matrix](assets/confusion_matrix_normalized.png)
 
 #### Precision Confidence Curve
-![YOLO Precision Confidence Curve](assets/BoxP_curve.png.png)
+![YOLO Precision Confidence Curve](assets/BoxP_curve.png)
 
 
 ### EfficientNet Classification Performance
