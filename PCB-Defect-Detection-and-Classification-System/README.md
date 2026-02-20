@@ -82,6 +82,4 @@ Due to GitHub size limitations, the complete dataset, trained model, and full ex
 
 ---
 
-## 👩‍💻 Author
-Shruti Kagale  
-Internship Project – PCB Defect Detection and Classification System
+
