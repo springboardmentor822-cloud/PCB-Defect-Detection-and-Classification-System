@@ -1,0 +1,13 @@
+fastapi
+uvicorn[standard]
+python-multipart
+pydantic
+pydantic-settings
+numpy
+opencv-python
+pillow
+torch
+torchvision
+pandas
+tqdm
+seaborn

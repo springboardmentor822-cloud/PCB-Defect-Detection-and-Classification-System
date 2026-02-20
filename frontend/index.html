@@ -1,0 +1,176 @@
+ 
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>PCB Defect Detection System</title>
+    <link rel="stylesheet" href="./assets/style.css" />
+  </head>
+  <body>
+    <div class="app">
+      <header class="header">
+        <div class="header__title">PCB Defect Detection System – AI Powered Inspection Platform</div>
+        <div class="header__right">
+          <span class="pill" id="modelStatusPill">Model: checking…</span>
+          <span class="pill pill--muted" id="devicePill">Device: —</span>
+        </div>
+      </header>
+
+      <div class="content">
+        <aside class="sidebar">
+          <div class="card">
+            <div class="card__title">Settings</div>
+            <label class="label">Detection Mode</label>
+            <div class="segmented" role="tablist" aria-label="Detection mode">
+              <button class="segmented__btn is-active" id="modeAutoBtn" type="button">Auto Detection (YOLOv5)</button>
+              <button class="segmented__btn" id="modeTemplateBtn" type="button">Template Comparison</button>
+            </div>
+
+            <div class="divider"></div>
+
+            <div class="kv">
+              <div class="kv__k">Backend</div>
+              <div class="kv__v" id="backendUrlLabel">http://127.0.0.1:8000</div>
+            </div>
+            <div class="kv">
+              <div class="kv__k">Classes</div>
+              <div class="kv__v">missing hole, mouse bite, open circuit, short, spur, spurious copper</div>
+            </div>
+          </div>
+
+          <div class="card">
+            <div class="card__title">Model Details</div>
+            <div id="modelDetails" class="mono small muted">Loading…</div>
+          </div>
+
+          <div class="card">
+            <div class="card__title">System Information</div>
+            <div class="mono small muted" id="sysInfo">
+              Runs locally • FastAPI • HTML/CSS/JS • No external services
+            </div>
+          </div>
+        </aside>
+
+        <main class="main">
+          <section class="card">
+            <div class="card__title">Upload</div>
+            <!-- Form wrapper prevents accidental submit/reload; submission is done via fetch in script.js -->
+            <form class="uploader" id="uploadForm" method="post" action="#" onsubmit="return false;">
+              <div class="dropzone" id="dropzone">
+                <input id="fileInput" type="file" accept="image/*" />
+                <div class="dropzone__text">
+                  <div class="dropzone__headline">Drag & drop a PCB image</div>
+                  <div class="dropzone__sub">or click to browse (JPG/PNG/BMP/TIFF)</div>
+                  <div class="dropzone__file" id="selectedFile">No file selected</div>
+                </div>
+              </div>
+
+              <div class="templateBox" id="templateBox">
+                <label class="label">Golden PCB Template (required for template mode)</label>
+                <input id="templateInput" type="file" accept="image/*" />
+                <div class="small muted" id="selectedTemplate">No template selected</div>
+              </div>
+
+              <div class="actions">
+                <button class="btn btn--primary" id="runBtn" type="button">Run Detection</button>
+                <button class="btn" id="downloadBtn" type="button" disabled>Download Results</button>
+              </div>
+
+              <div class="status">
+                <div class="spinner" id="spinner" aria-hidden="true"></div>
+                <div id="statusText" class="muted">Ready.</div>
+              </div>
+
+              <div class="error" id="errorBox" hidden></div>
+            </form>
+          </section>
+
+          <section class="grid">
+            <div class="card">
+              <div class="card__title">Original Image</div>
+              <img class="img" id="origImg" alt="Original upload preview" />
+            </div>
+            <div class="card">
+              <div class="card__title">Annotated Output</div>
+              <img class="img" id="annotImg" alt="Annotated output" />
+              <div class="small muted" id="annotPath"></div>
+            </div>
+          </section>
+
+          <section class="grid" id="templateVisuals" hidden>
+            <div class="card">
+              <div class="card__title">Difference Map</div>
+              <img class="img" id="diffImg" alt="Difference map" />
+            </div>
+            <div class="card">
+              <div class="card__title">Overlay (Aligned + Differences)</div>
+              <img class="img" id="overlayImg" alt="Overlay" />
+            </div>
+          </section>
+
+          <section class="card">
+            <div class="card__title">Final Result</div>
+            <div class="resultRow">
+              <div class="metric">
+                <div class="metric__k">Total Defects</div>
+                <div class="metric__v" id="totalDefects">—</div>
+              </div>
+              <div class="metric">
+                <div class="metric__k">Avg. Confidence</div>
+                <div class="metric__v" id="avgConf">—</div>
+              </div>
+              <div class="metric">
+                <div class="metric__k">Localization Time</div>
+                <div class="metric__v" id="locTime">—</div>
+              </div>
+              <div class="metric">
+                <div class="metric__k">Processing Time</div>
+                <div class="metric__v" id="procTime">—</div>
+              </div>
+            </div>
+
+            <div class="divider"></div>
+
+            <div class="grid">
+              <div class="card card--inner">
+                <div class="card__title">Per-Class Counts</div>
+                <div id="classCounts" class="chips"></div>
+              </div>
+              <div class="card card--inner">
+                <div class="card__title">Evaluation Panel</div>
+                <div class="mono small" id="evalPanel">—</div>
+              </div>
+            </div>
+          </section>
+
+          <section class="card">
+            <div class="card__title">ROI Pipeline Breakdown</div>
+            <div id="pipelineBars" class="pipeline"></div>
+          </section>
+
+          <section class="card">
+            <div class="card__title">Defect Location Table</div>
+            <div class="tableWrap">
+              <table class="table">
+                <thead>
+                  <tr>
+                    <th>ID</th>
+                    <th>Type</th>
+                    <th>Confidence</th>
+                    <th>Bounding Box (x1,y1,x2,y2)</th>
+                  </tr>
+                </thead>
+                <tbody id="detTableBody">
+                  <tr><td class="muted" colspan="4">No results yet.</td></tr>
+                </tbody>
+              </table>
+            </div>
+          </section>
+        </main>
+      </div>
+    </div>
+
+    <script src="./assets/script.js"></script>
+  </body>
+</html>
