@@ -51,7 +51,7 @@ The objective is to automate quality inspection and improve manufacturing effici
 
 Due to GitHub size limitations, the complete dataset, trained model, and full experimental results are available here:
 
-🔗 **Google Drive Link:** (https://drive.google.com/drive/folders/10L3qI-VrZ1bv-M9B5ZPVh8Ayu6Lyw6ys?usp=sharing) 
+🔗 **Google Drive Link:** https://drive.google.com/drive/folders/10L3qI-VrZ1bv-M9B5ZPVh8Ayu6Lyw6ys?usp=sharing 
 
 ### Drive Folder Contains:
 - Full Code
