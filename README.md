@@ -29,32 +29,33 @@ The objective is to automate quality inspection and improve manufacturing effici
 ## 📊 Model Performance
 
 ### ✅ Accuracy
-- Training Accuracy: XX%  
-- Validation Accuracy: XX%  
+- Training Accuracy: 98%  
+- Validation Accuracy: 99%  
 
 ### ✅ Performance Metrics
-- Precision: XX  
-- Recall: XX  
-- F1-Score: XX  
+- Precision: 0.7  
+- Recall: 1.0  
+- F1-Score: 0.89 
 
 ---
 
 ## 📈 Results Included in GitHub
 ✔ Confusion Matrix  
 ✔ Accuracy & Loss Graph  
-✔ 20–30 Best Sample Predictions 
+✔ Daahboard screenshots app_x
 ✔ Performance Metrics  
 
 ---
 
-## 📂 Full Dataset & Complete Results
+## 📂 Full Code & Complete Results
 
 Due to GitHub size limitations, the complete dataset, trained model, and full experimental results are available here:
 
-🔗 **Google Drive Link:** (PASTE YOUR DRIVE LINK HERE)
+🔗 **Google Drive Link:** (https://drive.google.com/drive/folders/10L3qI-VrZ1bv-M9B5ZPVh8Ayu6Lyw6ys?usp=sharing) 
 
 ### Drive Folder Contains:
-- Full Dataset
+- Full Code
+- All module Outputs
 - Complete Training Results
 - Trained Model File (.pth / .h5)
 - Additional Output Visualizations
