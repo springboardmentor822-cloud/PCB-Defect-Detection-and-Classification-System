@@ -37,8 +37,6 @@ The objective is to automate quality inspection and improve manufacturing effici
 - Recall: XX  
 - F1-Score: XX  
 
-*(Replace XX with your actual values)*
-
 ---
 
 ## 📈 Results Included in GitHub
