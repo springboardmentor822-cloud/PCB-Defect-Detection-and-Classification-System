@@ -122,5 +122,6 @@ Heatmap visualization of defect confidence
 Cloud or edge deployment
 
 AUTHOR 
-    RUVETHA SP 
+
+RUVETHA SP 
     
