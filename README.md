@@ -1,4 +1,4 @@
-# 🖼 PCB Defect Detection and Classification System
+#  PCB Defect Detection and Classification System
 
 ## 📌 Project Overview
 This project focuses on detecting and classifying defects in Printed Circuit Boards (PCB) using Deep Learning techniques. The system automatically identifies defective PCB images and classifies them into specific defect categories.
