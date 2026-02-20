@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>PCB Defect Detection</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f6f9;
+            text-align: center;
+            padding: 40px;
+        }
+
+        .container {
+            background: #ffffff;
+            width: 450px;
+            margin: auto;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0px 0px 15px rgba(0,0,0,0.1);
+        }
+
+        h1 {
+            color: #2c3e50;
+        }
+
+        input[type="file"] {
+            margin: 15px 0;
+        }
+
+        button {
+            background-color: #3498db;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+
+        button:hover {
+            background-color: #2980b9;
+        }
+
+        .result {
+            margin-top: 20px;
+            padding: 15px;
+            border-radius: 5px;
+        }
+
+        .defect {
+            background-color: #ffe6e6;
+            color: #c0392b;
+        }
+
+        .non-defect {
+            background-color: #eafaf1;
+            color: #27ae60;
+        }
+
+        img {
+            margin-top: 15px;
+            max-width: 100%;
+            border-radius: 5px;
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="container">
+    <h1>PCB Defect Detection</h1>
+
+    <form method="POST" enctype="multipart/form-data">
+        <input type="file" name="image" required>
+        <br>
+        <button type="submit">Detect</button>
+    </form>
+
+    {% if result_type %}
+        <div class="result {% if result_type == 'Defective PCB' %}defect{% else %}non-defect{% endif %}">
+            <h2>Result: {{ result_type }}</h2>
+            <p><strong>Defect Type:</strong> {{ defect_type }}</p>
+            <p><strong>Confidence:</strong> {{ confidence }}%</p>
+        </div>
+    {% endif %}
+
+    {% if image %}
+        <h3>Uploaded Image</h3>
+        <img src="{{ image }}" alt="Uploaded PCB Image">
+    {% endif %}
+</div>
+
+</body>
+</html>
