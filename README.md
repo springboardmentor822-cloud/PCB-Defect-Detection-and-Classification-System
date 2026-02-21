@@ -123,19 +123,77 @@ User Upload
 ## 6. Project Structure
 
 ```
-project/
+PCB-Defect-Detection-and-Classification-System/
 │
-├── frontend/              User interface (Streamlit application)
-├── src/                   Backend inference pipeline
-├── config/                Configuration and path management
-├── trainings/             Dataset generation and model training scripts
-├── models/                Stored trained models
+├── README.md                                      # Project documentation
+├── LICENSE                                        # MIT License
 │
-├── data/raw/              Original images, templates and annotations
-├── data/processed/        Generated masks and contours
-├── processed_dataset/     Final training dataset
+├── backend/                                       # FastAPI backend application
+│   ├── app.py                                     # Entry point
+│   ├── inference.py                               # YOLO inference re-export
+│   ├── evaluation.py                              # Evaluation re-export
+│   ├── roi.py                                     # ROI extraction re-export
+│   ├── requirements.txt                           # Python dependencies
+│   └── app/                                       # Main application package
+│       ├── __init__.py
+│       ├── main.py                                # FastAPI app factory, CORS, startup
+│       ├── core/
+│       │   ├── config.py                          # Settings (paths, model params, CORS)
+│       │   └── logging.py                         # Structured logging setup
+│       ├── api/
+│       │   ├── routes.py                          # Main router
+│       │   ├── routes_detect.py                   # POST /api/detect
+│       │   ├── routes_results.py                  # GET /api/results/{run_id}/*
+│       │   └── routes_info.py                     # GET /api/health & /api/model
+│       ├── services/
+│       │   ├── model_manager.py                   # Singleton YOLOv5 model loader
+│       │   ├── yolo_inference.py                  # YOLOv5 inference pipeline
+│       │   ├── template_compare.py                # ORB alignment + structural diff
+│       │   ├── pipeline.py                        # Full detection orchestrator
+│       │   ├── evaluation.py                      # Confidence metrics
+│       │   ├── roi.py                             # ROI crop extraction
+│       │   ├── postprocess.py                     # Detection summarization
+│       │   └── report_writer.py                   # JSON & CSV report generation
+│       └── utils/
+│           └── files.py                           # File upload, run ID generation
 │
-└── README.md
+├── frontend/                                      # Browser-based dashboard
+│   ├── index.html                                 # Main page
+│   └── assets/
+│       ├── style.css                              # Dashboard styles
+│       └── script.js                              # Frontend logic & API calls
+│
+├── train.py                                       # Training script (subprocess)
+├── train_direct.py                                # Training script (direct import)
+├── serve.py                                       # Simple HTTP server for frontend
+│
+├── yolov5/                                        # YOLOv5 framework
+│   ├── train.py / detect.py / val.py              # YOLOv5 entry points
+│   ├── dataset.yaml                               # Dataset configuration
+│   ├── yolov5s.pt                                 # Pre-trained base weights
+│   ├── models/                                    # Model architecture definitions
+│   ├── utils/                                     # YOLOv5 utilities
+│   └── runs/train/pcb_1st/                        # Training output
+│       ├── weights/best.pt                        # Best trained weights
+│       ├── weights/last.pt                        # Last checkpoint
+│       ├── results.png                            # Training curves
+│       ├── confusion_matrix.png                   # Confusion matrix
+│       ├── F1_curve.png / P_curve.png / R_curve.png / PR_curve.png
+│       └── hyp.yaml                               # Hyperparameters
+│
+├── uploads/                                       # Uploaded test images (per run)
+├── XmlToTxt/                                      # XML → YOLO TXT annotation converter
+│   ├── xmltotxt.py
+│   └── out/                                       # Converted annotations
+│
+├── PCB DEFECTS DETECTION YOLOV5.ipynb             # Main Jupyter notebook
+├── PCB_Defects_Detection_Colab_GPU.ipynb          # Google Colab GPU notebook
+├── PCB_defects_Detection.ipynb                    # Additional experiments
+│
+└── PCB-Defect-Detection-and-Classification-System/  # Reference screenshots
+    ├── app_1.png … app_5.png                      # App screenshots
+    ├── confusion_matrix.png / accuracy_curve.png
+    └── prediction_log.csv
 ```
 
 ---
