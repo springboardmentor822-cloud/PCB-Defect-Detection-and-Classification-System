@@ -303,4 +303,5 @@ For full license text, see: [MIT License](https://opensource.org/licenses/MIT)
 ## Author
 
 **Vaishnavi S**
-Infosys Internship Program
+Infosys Virtual Internship Program
+
