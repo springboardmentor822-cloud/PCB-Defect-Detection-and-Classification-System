@@ -1,0 +1,51 @@
+# NarrativeNexus: Dynamic Text Analysis Platform
+
+## 📌 Description
+This project is a Dynamic Text Analysis Platform that analyzes text using Natural Language Processing (NLP) techniques.
+
+It can detect topics, analyze sentiment, generate summaries, and provide insights from user input text.
+
+---
+
+## 🚀 Features
+- Topic Detection
+- Sentiment Analysis
+- Text Summarization
+- Insight & Recommendation
+- Interactive Streamlit Dashboard
+
+---
+
+## 🛠️ Technologies Used
+- Python
+- Streamlit
+- TextBlob
+
+---
+
+## ▶️ How to Run the Project
+
+1. Install required libraries:
+pip install -r requirements.txt
+
+2. Run the application:
+streamlit run streamlit_app.py
+
+---
+
+## 📊 Example Input
+
+The new iPhone has amazing features but the price is too high and users are concerned about privacy.
+
+---
+
+## 📈 Output
+- Topic: Product Review / Technology
+- Sentiment: Mixed
+- Summary: Short summary of the text
+- Recommendation: Suggestions based on analysis
+
+---
+
+## 📄 License
+This project is licensed under the MIT License.
