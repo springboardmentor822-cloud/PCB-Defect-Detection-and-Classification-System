@@ -1,0 +1,143 @@
+# 📚 Topic Modelling & NLP Analysis Pipeline
+
+> A comprehensive NLP pipeline built during the **Infosys Internship** program, featuring topic modelling, sentiment analysis, and document summarization using state-of-the-art machine learning techniques.
+
+---
+
+## 🗂️ Project Overview
+
+This project implements multiple NLP pipelines for analyzing and understanding large text corpora. It includes:
+
+- **Topic Modelling** using Non-negative Matrix Factorization (NMF)
+- **Sentiment Analysis** using VADER with technical document reliability detection
+- **Document Summarization** using a hybrid extractive + abstractive approach
+
+---
+
+## 📁 Project Structure
+
+```
+topic-modelling/
+│
+├── nmf_classifier.ipynb          # Main topic modelling notebook using NMF
+├── sentiment_analysis.ipynb      # Sentiment analysis pipeline with VADER
+├── document_summarization.ipynb  # Hybrid document summarization pipeline
+│
+├── nlp_preprocessing_1.txt       # Sample document corpus (set 1)
+├── nlp_preprocessing_2.txt       # Sample document corpus (set 2)
+│
+├── nmf_model.joblib              # Trained NMF model (serialized)
+├── tfidf_vectorizer.joblib       # Trained TF-IDF vectorizer (serialized)
+├── shared_vocab.joblib           # Shared vocabulary file (serialized)
+│
+└── README.md                     # Project documentation
+```
+
+---
+
+## 🔬 Notebooks
+
+### 1. `nmf_classifier.ipynb` — Topic Modelling with NMF
+
+Performs unsupervised topic discovery on a document corpus using **Non-negative Matrix Factorization (NMF)**.
+
+**Key Features:**
+
+- TF-IDF vectorization of raw text documents
+- NMF-based topic extraction and assignment
+- Interactive visualizations of topic distributions
+- Serialized model artifacts for reuse (`nmf_model.joblib`, `tfidf_vectorizer.joblib`, `shared_vocab.joblib`)
+
+---
+
+### 2. `sentiment_analysis.ipynb` — Sentiment Analysis Pipeline
+
+Analyzes sentiment across documents using the **VADER (Valence Aware Dictionary and sEntiment Reasoner)** lexicon-based model.
+
+**Key Features:**
+
+- Positive / Negative / Neutral / Compound scoring
+- Technical document reliability detection (flags overly neutral/ambiguous text)
+- Document-level and corpus-level sentiment aggregation
+- Detailed visualizations (bar charts, heatmaps, trend plots)
+
+---
+
+### 3. `document_summarization.ipynb` — Hybrid Summarization Pipeline
+
+Generates concise summaries for input documents using a **hybrid extractive + abstractive** strategy.
+
+**Key Features:**
+
+- **Extractive**: Consensus scoring across TextRank, LSA, and LexRank algorithms
+- **Abstractive**: Transformer-based summarization using Facebook's **BART** model (`facebook/bart-large-cnn`)
+- Keyword extraction using RAKE and TF-IDF
+- Multi-panel dashboard visualization for summary reporting
+
+---
+
+## 🛠️ Technologies Used
+
+| Category          | Libraries / Tools                               |
+| ----------------- | ----------------------------------------------- |
+| Language          | Python 3.x                                      |
+| NLP               | NLTK, spaCy, Gensim, Transformers (HuggingFace) |
+| Topic Modelling   | scikit-learn (NMF, TF-IDF)                      |
+| Sentiment         | VADER (vaderSentiment)                          |
+| Summarization     | sumy, BART (`facebook/bart-large-cnn`)        |
+| Visualization     | Matplotlib, Seaborn, WordCloud                  |
+| Model Persistence | joblib                                          |
+| Notebook          | Jupyter Notebook                                |
+
+---
+
+## 🚀 Getting Started
+
+### Prerequisites
+
+Ensure you have Python 3.8+ installed along with Jupyter Notebook.
+
+### Installation
+
+```bash
+# Clone the repository
+git clone <your-repo-url>
+cd topic-modelling
+
+# Install required dependencies
+pip install numpy pandas scikit-learn nltk gensim transformers
+pip install vaderSentiment sumy rake-nltk matplotlib seaborn wordcloud
+pip install joblib jupyter
+```
+
+### Running the Notebooks
+
+```bash
+# Launch Jupyter Notebook
+jupyter notebook
+```
+
+Then open any of the three notebooks:
+
+- `nmf_classifier.ipynb`
+- `sentiment_analysis.ipynb`
+- `document_summarization.ipynb`
+
+### Using Pre-trained Models
+
+The serialized `.joblib` files allow you to skip retraining:
+
+```python
+import joblib
+
+# Load pre-trained artifacts
+nmf_model = joblib.load('nmf_model.joblib')
+vectorizer = joblib.load('tfidf_vectorizer.joblib')
+vocab = joblib.load('shared_vocab.joblib')
+```
+
+---
+
+## 📊 Sample Input Format
+
+The `.txt` files (`nlp_preprocessing_1.txt`, `nlp_preprocessing_2.txt`) contain pre-processed text documents used as input to the pipelines. Each line or block represents a separate document.
