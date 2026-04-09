@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 # streamlit run streamlit_app.py
 import streamlit as st
 import re
@@ -182,3 +183,184 @@ def main():
 
 if __name__ == "__main__":
     main()
+=======
+import streamlit as st
+import re
+from textblob import TextBlob
+from sklearn.feature_extraction.text import CountVectorizer, TfidfVectorizer
+from sklearn.decomposition import LatentDirichletAllocation, NMF
+import matplotlib.pyplot as plt
+
+# ---------------- CONFIG ----------------
+st.set_page_config(page_title="Dynamic Text Analysis", layout="wide")
+
+# ---------------- CLEAN TEXT ----------------
+def clean_text(text):
+    text = text.lower()
+    text = re.sub(r'[^a-zA-Z ]', ' ', text)
+    text = re.sub(r'\s+', ' ', text)
+    return text.strip()
+
+# ---------------- SUMMARY ----------------
+def summarize_text(text, n=3):
+    sentences = re.split(r'(?<=[.!?])\s+', text.strip())
+    return " ".join(sentences[:n]) if sentences else ""
+
+# ---------------- SENTIMENT ----------------
+def analyze_sentiment(text):
+    polarity = TextBlob(text).sentiment.polarity
+    if polarity > 0:
+        return "Positive 😊", polarity
+    elif polarity < 0:
+        return "Negative 😞", polarity
+    else:
+        return "Neutral 😐", polarity
+
+# ---------------- CREATE DOCS ----------------
+def create_docs(text):
+    cleaned = clean_text(text)
+
+    docs = re.split(r'[.!?]', cleaned)
+    docs = [d.strip() for d in docs if len(d.split()) > 5]
+
+    # fallback to chunks if too small
+    if len(docs) < 3:
+        words = cleaned.split()
+        chunk_size = max(30, len(words)//3)
+        docs = [" ".join(words[i:i+chunk_size]) for i in range(0, len(words), chunk_size)]
+
+    if len(docs) < 2:
+        docs = [cleaned, cleaned]
+
+    return docs
+
+# ---------------- TOPIC MODEL ----------------
+def topic_model(text):
+    docs = create_docs(text)
+
+    count_vec = CountVectorizer(stop_words='english', max_df=1.0, min_df=1)
+    tfidf_vec = TfidfVectorizer(stop_words='english', max_df=1.0, min_df=1)
+
+    try:
+        X_count = count_vec.fit_transform(docs)
+        X_tfidf = tfidf_vec.fit_transform(docs)
+    except:
+        docs = ["fallback data"] * 3
+        X_count = count_vec.fit_transform(docs)
+        X_tfidf = tfidf_vec.fit_transform(docs)
+
+    n_topics = min(3, len(docs))
+    if n_topics < 2:
+        n_topics = 2
+
+    lda = LatentDirichletAllocation(n_components=n_topics, random_state=42)
+    lda.fit(X_count)
+
+    nmf = NMF(n_components=n_topics, random_state=42, init='nndsvd', max_iter=400)
+    nmf.fit(X_tfidf)
+
+    return lda, nmf, count_vec, tfidf_vec, X_count
+
+# ---------------- DISPLAY TOPICS ----------------
+def display_topics(model, vectorizer, title):
+    words = vectorizer.get_feature_names_out()
+    st.subheader(f"📌 {title} Topics")
+
+    for i, topic in enumerate(model.components_):
+        top_idx = topic.argsort()[-6:][::-1]
+        top_words = [words[j] for j in top_idx]
+        st.write(f"👉 Topic {i+1}: {', '.join(top_words)}")
+
+# ---------------- SMALL CLEAN GRAPH ----------------
+def plot_topics(model, vectorizer, title):
+    words = vectorizer.get_feature_names_out()
+    n_topics = len(model.components_)
+
+    # 🔥 SMALLER SIZE FIX
+    fig, axes = plt.subplots(n_topics, 1, figsize=(5, 2*n_topics))
+
+    if n_topics == 1:
+        axes = [axes]
+
+    for i, topic in enumerate(model.components_):
+        top_idx = topic.argsort()[-8:][::-1]
+        top_words = [words[j] for j in top_idx]
+        weights = topic[top_idx]
+
+        axes[i].barh(top_words, weights)
+        axes[i].set_title(f"{title} Topic {i+1}")
+        axes[i].tick_params(axis='y', labelsize=8)  # 🔥 smaller text
+
+    plt.tight_layout(pad=1.0)
+    st.pyplot(fig)
+
+# ---------------- UI ----------------
+st.title("🚀 Dynamic Text Analysis Dashboard")
+
+text = st.text_area("✍️ Enter your text here...", height=200)
+
+# ---------------- STATS ----------------
+if text.strip():
+    col1, col2, col3 = st.columns(3)
+    col1.metric("Words", len(text.split()))
+    col2.metric("Sentences", len(re.findall(r'[.!?]', text)))
+    col3.metric("Unique Words", len(set(text.split())))
+
+# ---------------- TABS ----------------
+tab1, tab2, tab3 = st.tabs([
+    "🧠 Topic Modeling",
+    "😊 Sentiment Analysis",
+    "📄 Summary"
+])
+
+# ---------------- TOPIC MODELING ----------------
+with tab1:
+    st.subheader("Topic Modeling (LDA + NMF)")
+
+    if st.button("Generate Topics"):
+        if not text.strip():
+            st.warning("Please enter text")
+        else:
+            lda, nmf, count_vec, tfidf_vec, X = topic_model(text)
+
+            st.markdown("### 📊 Model Scores")
+            st.write("🔹 LDA Perplexity:", round(lda.perplexity(X), 2))
+            st.write("🔹 NMF Reconstruction Error:", round(nmf.reconstruction_err_, 4))
+
+            display_topics(lda, count_vec, "LDA")
+            display_topics(nmf, tfidf_vec, "NMF")
+
+            st.markdown("### 📈 LDA Visualization")
+            plot_topics(lda, count_vec, "LDA")
+
+            st.markdown("### 📈 NMF Visualization")
+            plot_topics(nmf, tfidf_vec, "NMF")
+
+# ---------------- SENTIMENT ----------------
+with tab2:
+    st.subheader("Sentiment Analysis")
+
+    if st.button("Analyze Sentiment"):
+        if not text.strip():
+            st.warning("Enter text")
+        else:
+            label, polarity = analyze_sentiment(text)
+            st.subheader(label)
+            st.write("Polarity Score:", round(polarity, 3))
+
+# ---------------- SUMMARY ----------------
+with tab3:
+    st.subheader("Document Summary")
+
+    if st.button("Generate Summary"):
+        if not text.strip():
+            st.warning("Enter text")
+        else:
+            summary = summarize_text(text)
+            st.subheader("📄 Summary")
+            st.write(summary)
+
+# ---------------- FOOTER ----------------
+st.markdown("---")
+st.markdown("✅ Dynamic Text Analysis Dashboard | LDA + NMF + Sentiment + Summary")
+>>>>>>> 8abd64f (Add Dynamic Text Analysis Dashboard project)
