@@ -1,6 +1,6 @@
 # 📚 Topic Modelling & NLP Analysis Pipeline
 
-> A comprehensive NLP pipeline built during the **Infosys Internship** program, featuring topic modelling, sentiment analysis, and document summarization using state-of-the-art machine learning techniques.
+> A comprehensive NLP pipeline built during the **Infosys Springboard Internship** program, featuring topic modelling, sentiment analysis, and document summarization.
 
 ---
 
@@ -46,7 +46,7 @@ topic-modelling/
 
 ### 1. `nmf_classifier.ipynb` — Topic Modelling with NMF
 
-Performs unsupervised topic discovery on a document corpus using **Non-negative Matrix Factorization (NMF)**.
+Performs unsupervised topic discovery on a document corpus (20 newsgroups dataset) using **Non-negative Matrix Factorization (NMF)**.
 
 **Key Features:**
 
