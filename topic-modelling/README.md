@@ -11,6 +11,7 @@ This project implements multiple NLP pipelines for analyzing and understanding l
 - **Topic Modelling** using Non-negative Matrix Factorization (NMF)
 - **Sentiment Analysis** using VADER with technical document reliability detection
 - **Document Summarization** using a hybrid extractive + abstractive approach
+- **Interactive Dashboard** built with Streamlit to unify these pipelines into a single web application
 
 ---
 
@@ -29,6 +30,12 @@ topic-modelling/
 ├── nmf_model.joblib              # Trained NMF model (serialized)
 ├── tfidf_vectorizer.joblib       # Trained TF-IDF vectorizer (serialized)
 ├── shared_vocab.joblib           # Shared vocabulary file (serialized)
+│
+├── streamlit_app/                # Interactive Streamlit dashboard
+│   ├── app.py                    # Main app entry point
+│   ├── pages_app/                # App pages (Home, Results)
+│   ├── tabs/                     # Dashboard tabs (Summary, Sentiment)
+│   └── analysis/                 # Analysis modules
 │
 └── README.md                     # Project documentation
 ```
@@ -76,6 +83,19 @@ Generates concise summaries for input documents using a **hybrid extractive + ab
 
 ---
 
+## 🖥️ Streamlit Interactive Dashboard
+
+The project includes a beautifully styled, dark-themed Streamlit web application that provides a user-friendly interface for the NLP pipelines.
+
+**Key Features:**
+
+- **Interactive File Upload & Text Input**: Easily test the NLP pipelines on new custom documents.
+- **Session-State Routing**: Seamless navigation between the Home and Results pages.
+- **Comprehensive Reporting**: The results are split into dedicated tabs (e.g., Summary, Sentiment) for focused analysis.
+- **Modern UI Design**: Custom global CSS featuring modern typography (Inter, Space Grotesk) and a consistent dark mode aesthetic.
+
+---
+
 ## 🛠️ Technologies Used
 
 | Category          | Libraries / Tools                               |
@@ -86,6 +106,7 @@ Generates concise summaries for input documents using a **hybrid extractive + ab
 | Sentiment         | VADER (vaderSentiment)                          |
 | Summarization     | sumy, BART (`facebook/bart-large-cnn`)        |
 | Visualization     | Matplotlib, Seaborn, WordCloud                  |
+| Web Framework     | Streamlit                                       |
 | Model Persistence | joblib                                          |
 | Notebook          | Jupyter Notebook                                |
 
@@ -107,7 +128,7 @@ cd topic-modelling
 # Install required dependencies
 pip install numpy pandas scikit-learn nltk gensim transformers
 pip install vaderSentiment sumy rake-nltk matplotlib seaborn wordcloud
-pip install joblib jupyter
+pip install joblib jupyter streamlit
 ```
 
 ### Running the Notebooks
@@ -122,6 +143,14 @@ Then open any of the three notebooks:
 - `nmf_classifier.ipynb`
 - `sentiment_analysis.ipynb`
 - `document_summarization.ipynb`
+
+### Running the Streamlit App
+
+To launch the interactive dashboard, navigate to the `streamlit_app` folder and run:
+
+```bash
+streamlit run streamlit_app/app.py
+```
 
 ### Using Pre-trained Models
 
